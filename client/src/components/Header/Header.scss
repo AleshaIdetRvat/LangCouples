@@ -1,0 +1,56 @@
+@import "../../assets/style/colors.scss";
+.header {
+}
+.header__container {
+    background-color: $sky;
+    padding: 16px 18px;
+}
+.header__grid {
+    gap: 28px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    justify-content: space-between;
+}
+.header__logo {
+}
+
+.header__profile {
+    transition: 0.2s linear;
+    fill: $light-blue;
+    height: 34px;
+    width: 34px;
+
+    box-shadow: 0px 0px 0px 0px $sky;
+    border-radius: 50%;
+
+    justify-self: end;
+    &:hover {
+        box-shadow: 0px 0px 0px 3px $white;
+        @media (max-width: 768px) {
+            box-shadow: 0px 0px 0px 0px $sky;
+        }
+    }
+    &:active {
+        @media (max-width: 768px) {
+            box-shadow: 0px 0px 0px 3px $white;
+        }
+        box-shadow: 0px 0px 0px 0px $white;
+    }
+}
+
+.header-logo__top-title,
+.header-logo__bottom-title {
+    font-family: "Fira Code", monospace;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 108.58%;
+    letter-spacing: -0.04em;
+    color: $blue;
+}
+
+.header-logo__top-title {
+}
+
+.header-logo__bottom-title {
+}
