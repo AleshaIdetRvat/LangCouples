@@ -1,2 +1,77 @@
+@import "../../../assets/style/colors.scss";
+
 .entry-page {
+    // .entry-page__container
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+    }
+
+    // .entry-page__welcome
+
+    &__welcome {
+    }
+
+    // .entry-page__title
+
+    &__title {
+        height: 119px;
+
+        text-align: center;
+        line-height: 102.08%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    // .entry-page__sign-up
+
+    &__sign-up {
+    }
+}
+
+.entry-sign-up {
+    background-color: $light-sky;
+    border-radius: 57px;
+    width: min-content;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+
+    // width: 267px;
+    // height: 257px;
+    padding: 45px 46px;
+
+    // .entry-sign-up__login
+
+    &__login {
+    }
+
+    // .entry-sign-up__login-btn
+
+    &__login-btn,
+    &__reg-btn {
+        width: 175px;
+    }
+    // .entry-sign-up__reg-btn
+
+    &__reg-btn {
+    }
+
+    // .entry-sign-up__separator
+
+    &__separator {
+    }
+
+    // .entry-sign-up__register
+
+    &__register {
+    }
 }
