@@ -60,7 +60,6 @@ export const login = (email, password) => async (dispath) => {
         const data = await authAPI.login(email, password)
 
         const { token, userId } = data
-        console.log("LOGIN success")
 
         dispath(setAuthData(token, userId))
         dispath(setIsAuth(true))
@@ -73,7 +72,9 @@ export const login = (email, password) => async (dispath) => {
 export const register = (email, password) => async (dispath) => {
     try {
         await authAPI.register(email, password)
-        dispath(login(email, password))
+        setTimeout(() => {
+            dispath(login(email, password))
+        }, 4000)
     } catch (error) {
         dispath(setErrorMsg(error.message))
     }
@@ -91,6 +92,7 @@ export const initLogin = () => (dispath) => {
 
     if (authInitData && authInitData.token) {
         dispath(setAuthData(authInitData.token, authInitData.token))
+        dispath(setIsAuth(true))
     }
 }
 

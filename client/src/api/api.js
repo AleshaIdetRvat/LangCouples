@@ -8,8 +8,11 @@ export const authAPI = {
     login: async (email, password) => {
         try {
             const resData = await axiosInstance.post(`auth/login`, { email, password })
-            return resData
-        } catch (error) {}
+
+            return resData.data
+        } catch (error) {
+            throw new Error(error.response.data.message)
+        }
     },
 
     register: async (email, password) => {

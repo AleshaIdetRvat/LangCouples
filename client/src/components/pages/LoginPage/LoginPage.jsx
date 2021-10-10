@@ -1,10 +1,11 @@
 import React from "react"
 import { Formik } from "formik"
 import * as yup from "yup"
-
+import { login } from "../../../redux/reducers/UserAuthDataReducer"
 import { GreenBtn } from "../../common/GreenBtn/GreenBtn"
 import { MainInput } from "../../common/MainInput/MainInput"
 import "./LoginPage.scss"
+import { connect } from "react-redux"
 const LoginForm = ({ onSubmitLogin, className }) => {
     //
     const validationSchema = yup.object().shape({
@@ -27,8 +28,8 @@ const LoginForm = ({ onSubmitLogin, className }) => {
             validateOnBlur
             //
             onSubmit={(values) => {
-                console.log(values)
-                onSubmitLogin(values)
+                const { login, password } = values
+                onSubmitLogin(login, password)
             }}
             //
             validationSchema={validationSchema}
@@ -84,14 +85,24 @@ const LoginForm = ({ onSubmitLogin, className }) => {
     )
 }
 
-const LoginPage = () => {
+const LoginPage = ({ authErrorMsg, login }) => {
+    const onSubmitLogin = (email, password) => {
+        login(email, password)
+    }
     return (
         <div className="login-page">
+            {authErrorMsg && <h1>{authErrorMsg}</h1>}
             <div className="login-page__container sky-container">
-                <LoginForm className="login-page__form" />
+                <LoginForm onSubmitLogin={onSubmitLogin} className="login-page__form" />
             </div>
         </div>
     )
 }
 
-export { LoginPage }
+const mapStateToProps = (state) => ({
+    authErrorMsg: state.UserAuthData.errorMsg,
+})
+
+const LoginPageContainer = connect(mapStateToProps, { login })(LoginPage)
+
+export { LoginPageContainer }

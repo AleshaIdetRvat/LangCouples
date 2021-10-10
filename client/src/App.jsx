@@ -7,7 +7,7 @@ import { Header } from "./components/Header/Header"
 import Loader from "./components/common/Loader"
 import { initializeApp } from "./redux/reducers/AppReducer"
 import { EntryPage } from "./components/pages/EntryPage/EntryPage"
-import { LoginPage } from "./components/pages/LoginPage/LoginPage"
+import { LoginPageContainer } from "./components/pages/LoginPage/LoginPage"
 import { RegisterPageContainer } from "./components/pages/RegisterPage/RegisterPage"
 
 const App = ({ isReady, isAuth, initializeApp }) => {
@@ -34,7 +34,7 @@ const App = ({ isReady, isAuth, initializeApp }) => {
                             <EntryPage />
                         </Route>
                         <Route path="/login" exact>
-                            <LoginPage />
+                            <LoginPageContainer />
                         </Route>
                         <Route path="/register" exact>
                             <RegisterPageContainer />
