@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Formik } from "formik"
 import * as yup from "yup"
 
@@ -6,7 +6,11 @@ import { GreenBtn } from "../../common/GreenBtn/GreenBtn"
 import { MainInput } from "../../common/MainInput/MainInput"
 import "./RegisterPage.scss"
 
-const RegisterForm = ({ onSubmitLogin, className }) => {
+import { authAPI } from "../../../api/api"
+import { connect } from "react-redux"
+import { register } from "../../../redux/reducers/UserAuthDataReducer"
+
+const RegisterForm = ({ className, onSubmitReg }) => {
     //
     const validationSchema = yup.object().shape({
         login: yup.string().email("Invalid email").required("Is required!"),
@@ -18,7 +22,8 @@ const RegisterForm = ({ onSubmitLogin, className }) => {
             .required("Is required!"),
         confirmPassword: yup
             .string()
-            .oneOf([yup.ref("password"), null], "Passwords must match"),
+            .oneOf([yup.ref("password"), null], "Passwords must match")
+            .required("Is required!"),
     })
 
     return (
@@ -32,8 +37,8 @@ const RegisterForm = ({ onSubmitLogin, className }) => {
             validateOnBlur
             //
             onSubmit={(values) => {
-                console.log(values)
-                onSubmitLogin(values)
+                const { login, password } = values
+                onSubmitReg(login, password)
             }}
             //
             validationSchema={validationSchema}
@@ -59,7 +64,7 @@ const RegisterForm = ({ onSubmitLogin, className }) => {
                                 touched={touched.login}
                                 name="login"
                                 type="text"
-                                placeholder="login"
+                                placeholder="email"
                             />
                         </div>
                         <div className="register-form__input-password">
@@ -102,14 +107,25 @@ const RegisterForm = ({ onSubmitLogin, className }) => {
     )
 }
 
-const RegisterPage = () => {
+const RegisterPage = ({ authErrorMsg, register }) => {
+    const onSubmitReg = (email, password) => {
+        register(email, password)
+    }
+
     return (
         <div className="register-page">
+            {authErrorMsg && <h1>{authErrorMsg}</h1>}
             <div className="register-page__container sky-container">
-                <RegisterForm className="register-page__form" />
+                <RegisterForm onSubmitReg={onSubmitReg} className="register-page__form" />
             </div>
         </div>
     )
 }
 
-export { RegisterPage }
+const mapStateToProps = (state) => ({
+    authErrorMsg: state.UserAuthData.errorMsg,
+})
+
+const RegisterPageContainer = connect(mapStateToProps, { register })(RegisterPage)
+
+export { RegisterPageContainer }

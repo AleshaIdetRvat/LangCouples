@@ -18,6 +18,7 @@ router.post(
     ],
     async (request, response) => {
         try {
+            //      await User.deleteMany({}) !!!удалить всех пользователей
             // результат валидации
             const errors = validationResult(request)
             //если не пустой возвращаем ошибку
@@ -34,7 +35,7 @@ router.post(
             if (candidate) {
                 return response
                     .status(400)
-                    .json({ message: "Login is busy by another user" })
+                    .json({ message: "Email is busy by another user" })
             }
             // хешируем пароль
             const hashedPassword = await bcrypt.hash(password, 12)
@@ -42,6 +43,10 @@ router.post(
             const user = new User({ email, password: hashedPassword })
             // сохраняем в БД
             await user.save()
+
+            /// TEMP
+            console.log(`REGISTER user: ${email}`)
+            /// TEMP
 
             response.status(201).json({ message: "New user created" })
         } catch (error) {
@@ -83,7 +88,9 @@ router.post(
             const token = jwt.sign({ userId: user.id }, config.get("jwtSecret"), {
                 expiresIn: "2h",
             })
-
+            /// TEMP
+            console.log(`LOGIN user: ${email}`)
+            /// TEMP
             response.json({ token, userId: user.id })
         } catch (error) {
             response.status(500).json({ message: "Something wrong" })

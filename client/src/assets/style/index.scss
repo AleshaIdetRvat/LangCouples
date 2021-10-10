@@ -20,3 +20,19 @@ body {
     line-height: 102.08%;
     color: $text;
 }
+
+/* 
+
+<div class='header'>
+    <input class='login'/>
+</div>
+
+ */
+
+.header {
+    color: green;
+
+    .login {
+        background-color: red;
+    }
+}

@@ -8,7 +8,7 @@ import Loader from "./components/common/Loader"
 import { initializeApp } from "./redux/reducers/AppReducer"
 import { EntryPage } from "./components/pages/EntryPage/EntryPage"
 import { LoginPage } from "./components/pages/LoginPage/LoginPage"
-import { RegisterPage } from "./components/pages/RegisterPage/RegisterPage"
+import { RegisterPageContainer } from "./components/pages/RegisterPage/RegisterPage"
 
 const App = ({ isReady, isAuth, initializeApp }) => {
     React.useEffect(() => {
@@ -24,11 +24,10 @@ const App = ({ isReady, isAuth, initializeApp }) => {
             <Header />
             <main className="container">
                 {isAuth ? (
-                    <>
-                        <Switch>
-                            <Redirect to="/start" />
-                        </Switch>
-                    </>
+                    <Switch>
+                        <h1>you logined :3</h1>
+                        <Redirect to="/start" />
+                    </Switch>
                 ) : (
                     <Switch>
                         <Route path="/entry" exact>
@@ -38,7 +37,7 @@ const App = ({ isReady, isAuth, initializeApp }) => {
                             <LoginPage />
                         </Route>
                         <Route path="/register" exact>
-                            <RegisterPage />
+                            <RegisterPageContainer />
                         </Route>
                         <Redirect to="/entry" />
                     </Switch>
