@@ -8,17 +8,19 @@ const { check, validationResult } = require("express-validator")
 
 const router = Router()
 
+// /api/auth/register
 router.post(
-    // /api/auth/register
     "/register",
+    // middleware для валидации полей body
     [
         check("email", "Invalid email").isEmail(),
-        check("password", "Minimal lenght of password 6 symbols").isLength({ min: 6 }),
+        check("password", "Min lenght of password 5 symbols").isLength({ min: 5 }),
     ],
     async (request, response) => {
         try {
+            // результат валидации
             const errors = validationResult(request)
-
+            //если не пустой возвращаем ошибку
             if (!errors.isEmpty()) {
                 return response
                     .status(400)
@@ -26,19 +28,19 @@ router.post(
             }
 
             const { email, password } = request.body
-
+            // проверяем есть ли уже пользователь с таким логином в БД
             const candidate = await User.findOne({ email })
-
+            // если такой юзер уже есть возвращаем ошибку и сообщение
             if (candidate) {
                 return response
                     .status(400)
-                    .json({ message: "E-mail is busy by another user" })
+                    .json({ message: "Login is busy by another user" })
             }
-
+            // хешируем пароль
             const hashedPassword = await bcrypt.hash(password, 12)
-
+            //создаем новую модель пользователя для БД
             const user = new User({ email, password: hashedPassword })
-
+            // сохраняем в БД
             await user.save()
 
             response.status(201).json({ message: "New user created" })
@@ -51,7 +53,7 @@ router.post(
 router.post(
     "/login",
     [
-        check("email", "Invalid email").normalizeEmail().isEmail(),
+        check("email", "Invalid email").isEmail().normalizeEmail(),
         check("password", "Field required").exists(),
     ],
     async (request, response) => {
@@ -67,6 +69,7 @@ router.post(
 
             const user = await User.findOne({ email })
 
+            // если такого пользователя нету, возвращаем ошибку
             if (!user) {
                 return response.status(400).json({ message: "User not found" })
             }
@@ -78,8 +81,9 @@ router.post(
             }
 
             const token = jwt.sign({ userId: user.id }, config.get("jwtSecret"), {
-                expiresIn: "1h",
+                expiresIn: "2h",
             })
+
             response.json({ token, userId: user.id })
         } catch (error) {
             response.status(500).json({ message: "Something wrong" })

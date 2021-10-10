@@ -9,7 +9,7 @@ const GreenBtn = ({ children, disabled, onClick, className }) => {
 
     return (
         <button onClick={onClick} className={styles}>
-            <span class="green-btn__inner-text">{children}</span>
+            <span className="green-btn__inner-text">{children}</span>
         </button>
     )
 }

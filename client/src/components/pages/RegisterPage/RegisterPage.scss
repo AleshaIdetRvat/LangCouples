@@ -1,0 +1,22 @@
+.register-page {
+}
+.register-page__container {
+    margin: 23px;
+    font-size: 0.75em;
+}
+.register-page__form {
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+}
+.register-form__input-login {
+}
+.register-form__input-password {
+}
+.register-form__submit {
+    width: 175px;
+    align-self: center;
+}

@@ -1,5 +1,11 @@
 @import "../../../assets/style/colors.scss";
 
+.sky-container {
+    padding: 45px 46px;
+    background-color: $light-sky;
+    border-radius: 57px;
+}
+
 .entry-page {
     // .entry-page__container
 
@@ -35,8 +41,8 @@
 }
 
 .entry-sign-up {
-    background-color: $light-sky;
-    border-radius: 57px;
+    // background-color: $light-sky;
+    // border-radius: 57px;
     width: min-content;
 
     display: flex;
@@ -45,9 +51,7 @@
     align-items: center;
     gap: 15px;
 
-    // width: 267px;
-    // height: 257px;
-    padding: 45px 46px;
+    //padding: 45px 46px;
 
     // .entry-sign-up__login
 

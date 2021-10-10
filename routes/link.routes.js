@@ -1,9 +1,7 @@
 const { Router } = require("express")
-const bcrypt = require("bcryptjs")
 const config = require("config")
 const shortId = require("shortid")
 const Link = require("../models/Link")
-const { check, validationResult } = require("express-validator")
 const authMiddleWare = require("../middleware/auth.middleware")
 
 const router = Router()

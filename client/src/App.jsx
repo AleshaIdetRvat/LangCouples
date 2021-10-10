@@ -7,7 +7,8 @@ import { Header } from "./components/Header/Header"
 import Loader from "./components/common/Loader"
 import { initializeApp } from "./redux/reducers/AppReducer"
 import { EntryPage } from "./components/pages/EntryPage/EntryPage"
-import { AuthPage } from "./components/pages/AuthPage"
+import { LoginPage } from "./components/pages/LoginPage/LoginPage"
+import { RegisterPage } from "./components/pages/RegisterPage/RegisterPage"
 
 const App = ({ isReady, isAuth, initializeApp }) => {
     React.useEffect(() => {
@@ -21,25 +22,28 @@ const App = ({ isReady, isAuth, initializeApp }) => {
     return (
         <BrowserRouter>
             <Header />
-            <div className="container">
+            <main className="container">
                 {isAuth ? (
                     <>
                         <Switch>
-                            <Redirect to="/entry" />
+                            <Redirect to="/start" />
                         </Switch>
                     </>
                 ) : (
                     <Switch>
-                        <Route path="/auth" exact>
+                        <Route path="/entry" exact>
                             <EntryPage />
                         </Route>
-                        <Route path="/auth" exact>
-                            <AuthPage />
+                        <Route path="/login" exact>
+                            <LoginPage />
                         </Route>
-                        <Redirect to="/auth" />
+                        <Route path="/register" exact>
+                            <RegisterPage />
+                        </Route>
+                        <Redirect to="/entry" />
                     </Switch>
                 )}
-            </div>
+            </main>
         </BrowserRouter>
     )
 }

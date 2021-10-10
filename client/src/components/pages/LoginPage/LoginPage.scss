@@ -1,0 +1,22 @@
+.login-page {
+}
+.login-page__container {
+    margin: 23px;
+    font-size: 0.75em;
+}
+.login-page__form {
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+}
+.login-form__input-login {
+}
+.login-form__input-password {
+}
+.login-form__submit {
+    width: 175px;
+    align-self: center;
+}
