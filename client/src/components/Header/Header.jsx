@@ -1,8 +1,8 @@
 import React from "react"
-import { NavLink } from "react-router-dom"
 import classNames from "classnames"
 import { IconProfile } from "../../assets/image/IconProfile"
 import { MenuBurger } from "./MenuBurger/MenuBurger"
+import Notifications from "../common/Notifications/Notifications"
 import "./Header.scss"
 
 const Header = () => {
@@ -10,6 +10,7 @@ const Header = () => {
     const headerStyles = classNames("header", {})
     return (
         <header className={headerStyles}>
+            <Notifications />
             <div className="header__container">
                 <div className="header__grid">
                     <div className="header__logo header-logo">

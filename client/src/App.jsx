@@ -9,6 +9,7 @@ import { initializeApp } from "./redux/reducers/AppReducer"
 import { EntryPage } from "./components/pages/EntryPage/EntryPage"
 import { LoginPageContainer } from "./components/pages/LoginPage/LoginPage"
 import { RegisterPageContainer } from "./components/pages/RegisterPage/RegisterPage"
+import StartPage from "./components/pages/StartPage/StartPage"
 
 const App = ({ isReady, isAuth, initializeApp }) => {
     React.useEffect(() => {
@@ -22,11 +23,17 @@ const App = ({ isReady, isAuth, initializeApp }) => {
     return (
         <BrowserRouter>
             <Header />
+
             <main className="container">
                 {isAuth ? (
                     <Switch>
-                        <h1>you logined :3</h1>
-                        <Redirect to="/start" />
+                        <Route path="/home" exact>
+                            <h1>home page</h1>
+                        </Route>
+                        <Route path="/start" exact>
+                            <StartPage />
+                        </Route>
+                        <Redirect to="/home" />
                     </Switch>
                 ) : (
                     <Switch>

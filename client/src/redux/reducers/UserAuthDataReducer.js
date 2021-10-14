@@ -6,11 +6,13 @@ const SET_IS_AUTH = "userauth/SET_IS_AUTH"
 
 const userDataStorage = "userData"
 
+const ID = () => "_" + Math.random().toString(36).substr(2, 9)
+
 const initState = {
     token: null,
     userId: null,
     isAuth: false,
-    errorMsg: null,
+    errorMsg: { text: null, id: null },
 }
 
 const UserAuthDataReducer = (state = initState, action) => {
@@ -24,7 +26,7 @@ const UserAuthDataReducer = (state = initState, action) => {
         case SET_ERROR_MSG:
             return {
                 ...state,
-                errorMsg: action.errorMsg,
+                errorMsg: { text: action.errorMsg, id: ID() },
             }
         case SET_IS_AUTH:
             return {
@@ -62,7 +64,9 @@ export const login = (email, password) => async (dispath) => {
         const { token, userId } = data
 
         dispath(setAuthData(token, userId))
+
         dispath(setIsAuth(true))
+
         localStorage.setItem(userDataStorage, JSON.stringify({ userId, token }))
     } catch (error) {
         dispath(setErrorMsg(error.message))
@@ -72,11 +76,11 @@ export const login = (email, password) => async (dispath) => {
 export const register = (email, password) => async (dispath) => {
     try {
         await authAPI.register(email, password)
-        setTimeout(() => {
-            dispath(login(email, password))
-        }, 4000)
+
+        await dispath(login(email, password))
     } catch (error) {
         dispath(setErrorMsg(error.message))
+        throw new Error(error.message)
     }
 }
 

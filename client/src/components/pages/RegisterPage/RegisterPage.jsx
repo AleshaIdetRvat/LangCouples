@@ -1,14 +1,15 @@
-import React, { useState } from "react"
+import React from "react"
+import PropTypes from "prop-types"
+import { useHistory } from "react-router-dom"
+import { connect } from "react-redux"
 import { Formik } from "formik"
 import * as yup from "yup"
 
+import { register } from "../../../redux/reducers/UserAuthDataReducer"
 import { GreenBtn } from "../../common/GreenBtn/GreenBtn"
 import { MainInput } from "../../common/MainInput/MainInput"
+import { newNotice } from "../../../redux/reducers/NoticeReducer"
 import "./RegisterPage.scss"
-
-import { authAPI } from "../../../api/api"
-import { connect } from "react-redux"
-import { register } from "../../../redux/reducers/UserAuthDataReducer"
 
 const RegisterForm = ({ className, onSubmitReg }) => {
     //
@@ -107,14 +108,23 @@ const RegisterForm = ({ className, onSubmitReg }) => {
     )
 }
 
-const RegisterPage = ({ authErrorMsg, register }) => {
-    const onSubmitReg = (email, password) => {
-        register(email, password)
+const RegisterPage = ({ authError, register, newNotice }) => {
+    const history = useHistory()
+
+    const onSubmitReg = async (email, password) => {
+        try {
+            await register(email, password)
+
+            history.push("/start")
+        } catch (error) {}
     }
+
+    React.useEffect(() => {
+        authError.text && newNotice(authError.text, "warning")
+    })
 
     return (
         <div className="register-page">
-            {authErrorMsg && <h1>{authErrorMsg}</h1>}
             <div className="register-page__container sky-container">
                 <RegisterForm onSubmitReg={onSubmitReg} className="register-page__form" />
             </div>
@@ -122,10 +132,21 @@ const RegisterPage = ({ authErrorMsg, register }) => {
     )
 }
 
+RegisterPage.propTypes = {
+    authError: PropTypes.shape({
+        text: PropTypes.string,
+        id: PropTypes.string,
+    }),
+    register: PropTypes.func,
+    newNotice: PropTypes.func,
+}
+
 const mapStateToProps = (state) => ({
-    authErrorMsg: state.UserAuthData.errorMsg,
+    authError: state.UserAuthData.errorMsg,
 })
 
-const RegisterPageContainer = connect(mapStateToProps, { register })(RegisterPage)
+const RegisterPageContainer = connect(mapStateToProps, { register, newNotice })(
+    RegisterPage
+)
 
 export { RegisterPageContainer }

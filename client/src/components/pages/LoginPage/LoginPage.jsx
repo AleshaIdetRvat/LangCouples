@@ -1,11 +1,14 @@
 import React from "react"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
 import { Formik } from "formik"
 import * as yup from "yup"
 import { login } from "../../../redux/reducers/UserAuthDataReducer"
 import { GreenBtn } from "../../common/GreenBtn/GreenBtn"
 import { MainInput } from "../../common/MainInput/MainInput"
+import { newNotice } from "../../../redux/reducers/NoticeReducer"
 import "./LoginPage.scss"
-import { connect } from "react-redux"
+
 const LoginForm = ({ onSubmitLogin, className }) => {
     //
     const validationSchema = yup.object().shape({
@@ -85,13 +88,17 @@ const LoginForm = ({ onSubmitLogin, className }) => {
     )
 }
 
-const LoginPage = ({ authErrorMsg, login }) => {
+const LoginPage = ({ authErrorMsg, login, newNotice }) => {
     const onSubmitLogin = (email, password) => {
         login(email, password)
     }
+
+    React.useEffect(() => {
+        authErrorMsg.text && newNotice(authErrorMsg.text, "warning")
+    })
+
     return (
         <div className="login-page">
-            {authErrorMsg && <h1>{authErrorMsg}</h1>}
             <div className="login-page__container sky-container">
                 <LoginForm onSubmitLogin={onSubmitLogin} className="login-page__form" />
             </div>
@@ -99,10 +106,19 @@ const LoginPage = ({ authErrorMsg, login }) => {
     )
 }
 
+LoginPage.propTypes = {
+    authError: PropTypes.shape({
+        text: PropTypes.string,
+        id: PropTypes.string,
+    }),
+    login: PropTypes.func,
+    newNotice: PropTypes.func,
+}
+
 const mapStateToProps = (state) => ({
     authErrorMsg: state.UserAuthData.errorMsg,
 })
 
-const LoginPageContainer = connect(mapStateToProps, { login })(LoginPage)
+const LoginPageContainer = connect(mapStateToProps, { login, newNotice })(LoginPage)
 
 export { LoginPageContainer }

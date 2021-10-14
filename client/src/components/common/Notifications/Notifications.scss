@@ -1,0 +1,45 @@
+@import "../../../assets/style/colors.scss";
+
+.notifications {
+    position: absolute;
+    z-index: 20;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: min-content;
+}
+
+.notifications__container {
+    //padding: 10px;
+}
+
+.notifications__row {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+}
+
+.notifications__item {
+    &:first-child {
+        margin-top: 10px;
+    }
+    margin-left: 10px;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.notice {
+    opacity: 0.9;
+    color: $text;
+    background-color: white;
+
+    &.warning {
+        color: $error-text;
+        background-color: $error;
+    }
+    &.success {
+        color: $green;
+        background-color: $green-light;
+    }
+}
