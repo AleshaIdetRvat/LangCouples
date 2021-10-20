@@ -10,11 +10,6 @@ const initState = {
         //     noticeType: null,
         //     id: 2,
         // },
-        // {
-        //     content: "ADD_NOTICE ADD_NOTICE ADD_NOTICE",
-        //     noticeType: null,
-        //     id: 3,
-        // },
     ],
 }
 
@@ -35,7 +30,7 @@ const NoticeReducer = (state = initState, action) => {
             return {
                 ...state,
                 notifications: state.notifications.filter(
-                    (notice) => notice.id != action.id
+                    (notice) => notice.id !== action.id
                 ),
             }
         default:

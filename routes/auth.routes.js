@@ -21,7 +21,7 @@ router.post(
             //      await User.deleteMany({}) !!!удалить всех пользователей
             // результат валидации
             const errors = validationResult(request)
-            //если не пустой возвращаем ошибку
+            //если не пустой возвращаем ошибкуdfdfd
             if (!errors.isEmpty()) {
                 return response
                     .status(400)
@@ -72,8 +72,6 @@ router.post(
             }
             const { email, password } = request.body
 
-            console.log("New user body: ", request.body)
-
             const user = await User.findOne({ email })
 
             // если такого пользователя нету, возвращаем ошибку
@@ -89,13 +87,19 @@ router.post(
                 return response.status(400).json({ message: "Wrong password" })
             }
 
+            const langs =
+                user.langs.from !== null
+                    ? { from: user.langs.from || "ru", to: user.langs.to || "en" }
+                    : null
+
             const token = jwt.sign({ userId: user.id }, config.get("jwtSecret"), {
                 expiresIn: "2h",
             })
             /// TEMP
             console.log(`LOGIN user: ${email}`)
+            console.log("langs: ", langs)
             /// TEMP
-            response.json({ token, userId: user.id })
+            response.json({ token, userId: user.id, langs })
         } catch (error) {
             response.status(500).json({ message: "Something wrong" })
         }

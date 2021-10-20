@@ -1,4 +1,5 @@
-import { authAPI } from "../../api/api"
+import { authAPI, setAuthToken } from "../../api/api"
+import { setLangFrom, setLangTo } from "./UserPersonalDataReducer"
 
 const LOGIN = "userauth/LOGIN"
 const SET_ERROR_MSG = "userauth/SET_ERROR_MSG"
@@ -57,22 +58,6 @@ const setAuthData = (jwtToken, id) => ({
 })
 
 // thunk creator
-export const login = (email, password) => async (dispath) => {
-    try {
-        const data = await authAPI.login(email, password)
-
-        const { token, userId } = data
-
-        dispath(setAuthData(token, userId))
-
-        dispath(setIsAuth(true))
-
-        localStorage.setItem(userDataStorage, JSON.stringify({ userId, token }))
-    } catch (error) {
-        dispath(setErrorMsg(error.message))
-    }
-}
-
 export const register = (email, password) => async (dispath) => {
     try {
         await authAPI.register(email, password)
@@ -87,7 +72,32 @@ export const register = (email, password) => async (dispath) => {
 // thunk creator
 export const logout = () => (dispath) => {
     dispath(setAuthData(null, null))
+    dispath(setIsAuth(false))
     localStorage.setItem(userDataStorage, JSON.stringify({ userId: null, token: null }))
+}
+
+// thunk creator
+export const login = (email, password) => async (dispath) => {
+    try {
+        const data = await authAPI.login(email, password)
+
+        const { token, userId, langs } = data
+
+        if (langs !== null) {
+            setLangFrom(langs.from)
+            setLangTo(langs.to)
+        }
+
+        setAuthToken(token)
+
+        dispath(setAuthData(token, userId))
+
+        dispath(setIsAuth(true))
+
+        localStorage.setItem(userDataStorage, JSON.stringify({ userId, token, langs }))
+    } catch (error) {
+        dispath(setErrorMsg(error.message))
+    }
 }
 
 // thunk creator
@@ -96,6 +106,14 @@ export const initLogin = () => (dispath) => {
 
     if (authInitData && authInitData.token) {
         dispath(setAuthData(authInitData.token, authInitData.token))
+        console.log("init login")
+
+        setAuthToken(authInitData.token)
+
+        if (authInitData.langs) {
+            setLangFrom(authInitData.langs.from)
+            setLangTo(authInitData.langs.to)
+        }
         dispath(setIsAuth(true))
     }
 }

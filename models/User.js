@@ -4,8 +4,8 @@ const schema = new Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     langs: {
-        from: { type: String },
-        to: { type: String },
+        from: { type: String, default: null },
+        to: { type: String, default: null },
     },
     exercises: {
         completed: { type: Number, default: 0 },

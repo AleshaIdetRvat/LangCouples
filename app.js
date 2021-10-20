@@ -9,7 +9,10 @@ const PORT = config.get("port") || 5000
 app.use((req, res, next) => {
     res.append("Access-Control-Allow-Origin", ["*"])
     res.append("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE")
-    res.append("Access-Control-Allow-Headers", "Content-Type")
+    res.append(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    )
     next()
 }) // CORS
 
@@ -18,6 +21,7 @@ app.use(express.urlencoded({ extended: false })) // url params
 
 app.use("/api/auth", require("./routes/auth.routes"))
 app.use("/api/couples", require("./routes/couples.routes"))
+app.use("/api/user", require("./routes/user.routes"))
 // app.use("/api/link", require("./routes/link.routes"))
 
 async function start() {

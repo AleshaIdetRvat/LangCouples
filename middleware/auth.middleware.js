@@ -6,7 +6,7 @@ module.exports = (request, response, next) => {
         return next()
     }
     try {
-        const token = request.headers.authorization.split(" ")[1] // "Bearer TOKEN"
+        const token = request.headers.authorization.split(" ")[1] // "Bearer ->TOKEN<-"
 
         if (!token) {
             return response.status(401).json({ message: "No authorized !token" })
@@ -14,12 +14,12 @@ module.exports = (request, response, next) => {
 
         const decodedUserData = jwt.verify(token, config.get("jwtSecret"))
 
-        request.user = decodedUserData // = { token, userId }
+        request.user = decodedUserData // = { userId }
 
         next()
     } catch (error) {
         return response
             .status(401)
-            .json({ message: "No authorized catch, error: " + error.message })
+            .json({ message: "No authorized catch, ERROR: " + error.message })
     }
 }

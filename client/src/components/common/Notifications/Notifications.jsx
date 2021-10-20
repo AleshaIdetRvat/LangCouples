@@ -7,8 +7,8 @@ import "./Notifications.scss"
 
 const Notice = ({ content, type, onClick }) => {
     const noticeStyles = classNames("notifications__item", "notice", {
-        warning: type == "warning",
-        success: type == "success",
+        warning: type === "warning",
+        success: type === "success",
     })
 
     return (

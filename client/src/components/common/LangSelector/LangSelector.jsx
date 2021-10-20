@@ -4,53 +4,50 @@ import classNames from "classnames"
 import { RuFlag, EnFlag, DeFlag } from "../../../assets/image/LangFlags"
 import "./LangSelector.scss"
 
-const LangSelector = (props) => {
+const LangSelector = ({ currentLang, selectLang, ...props }) => {
     const [isOpened, setOpened] = React.useState(false)
-    const [langs, setLangs] = React.useState([
+
+    const langsList = [
         { lang: "ru", Flag: RuFlag },
         { lang: "en", Flag: EnFlag },
         { lang: "de", Flag: DeFlag },
-    ])
+    ]
 
-    const onClickFlag = (i) => {
-        const newLangs = [...langs]
-        const oldFirstElem = newLangs[0]
-        newLangs[0] = newLangs[i]
-        newLangs[i] = oldFirstElem
-        setLangs(newLangs)
+    let SelectedFlag
+    let OtherLangs = []
+
+    for (const { lang, Flag } of langsList) {
+        if (lang === currentLang) SelectedFlag = Flag
+        else OtherLangs.push({ lang, Flag })
     }
 
-    const styles = classNames("lang-selector", { "--opened": isOpened })
+    const styles = classNames({ "lang-selector": true, "--opened": isOpened })
 
     return (
-        <div onClick={() => setOpened(!isOpened)} className={styles}>
+        <div onClick={() => setOpened(!isOpened)} className={styles} {...props}>
             <div className="lang-selector__container">
                 <div className="lang-selector__row">
-                    {langs.map((item, i) => {
-                        return (
-                            <div
-                                onClick={() => onClickFlag(i)}
-                                className="lang-selector__item"
-                            >
-                                <item.Flag className="lang-selector__flag" />
-                            </div>
-                        )
-                    })}
-                    {/* <div className="lang-selector__item">
-                        <RuFlag className="lang-selector__flag" />
+                    <div className="lang-selector__item --selected">
+                        <SelectedFlag className="lang-selector__flag" />
                     </div>
-                    <div className="lang-selector__item">
-                        <EnFlag className="lang-selector__flag" />
-                    </div>
-                    <div className="lang-selector__item">
-                        <DeFlag className="lang-selector__flag" />
-                    </div> */}
+                    {OtherLangs.map(({ lang, Flag }) => (
+                        <div
+                            onClick={() => selectLang(lang)}
+                            className="lang-selector__item"
+                            key={lang}
+                        >
+                            <Flag className="lang-selector__flag" />
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
     )
 }
 
-LangSelector.propTypes = {}
+LangSelector.propTypes = {
+    currentLang: PropTypes.string,
+    selectLang: PropTypes.func,
+}
 
-export default LangSelector
+export { LangSelector }

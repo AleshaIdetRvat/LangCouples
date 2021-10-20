@@ -11,7 +11,7 @@ const RuFlag = ({ className, ...props }) => {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
         >
-            <g clip-path="url(#clip0_11:165)">
+            <g clipPath="url(#clip0_11:165)">
                 <path
                     d="M40.5 81C62.8675 81 81 62.8675 81 40.5C81 18.1325 62.8675 0 40.5 0C18.1325 0 0 18.1325 0 40.5C0 62.8675 18.1325 81 40.5 81Z"
                     fill="#F0F0F0"
@@ -119,7 +119,7 @@ const DeFlag = ({ className, ...props }) => {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
         >
-            <g clip-path="url(#clip0_11:166)">
+            <g clipPath="url(#clip0_11:166)">
                 <path
                     d="M2.5191 54.5869C8.24147 70.0092 23.0865 81 40.5 81C57.9136 81 72.7586 70.0092 78.481 54.5869L40.5 51.0653L2.5191 54.5869Z"
                     fill="#FFDA44"
