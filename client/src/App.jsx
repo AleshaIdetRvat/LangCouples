@@ -10,6 +10,7 @@ import { EntryPage } from "./components/pages/EntryPage/EntryPage"
 import { LoginPageContainer } from "./components/pages/LoginPage/LoginPage"
 import { RegisterPageContainer } from "./components/pages/RegisterPage/RegisterPage"
 import StartPage from "./components/pages/StartPage/StartPage"
+import HomePage from "./components/pages/HomePage/HomePage"
 
 const App = ({ isReady, isAuth, initializeApp }) => {
     React.useEffect(() => {
@@ -28,7 +29,7 @@ const App = ({ isReady, isAuth, initializeApp }) => {
                 {isAuth ? (
                     <Switch>
                         <Route path="/home" exact>
-                            <h1>home page</h1>
+                            <HomePage />
                         </Route>
                         <Route path="/start" exact>
                             <StartPage />
