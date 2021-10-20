@@ -9,10 +9,12 @@ import {
 import { LangSelector } from "../../common/LangSelector/LangSelector"
 import { GreenBtn } from "../../common/GreenBtn/GreenBtn"
 import { useHistory } from "react-router-dom"
+import { Clue } from "../../common/Clue/Clue"
 import "./StartPage.scss"
 
 const StartPage = (props) => {
     const { langs, setLangFrom, setLangTo, saveLangs } = props
+    const [isFirstLangTouched, setFirstLangTouched] = React.useState(false)
     const history = useHistory()
 
     const onClick = () => {
@@ -25,7 +27,13 @@ const StartPage = (props) => {
             <div className="start-page__container">
                 <div className="start-page__column">
                     <h4 className="start-page__title">Choose your native language</h4>
-                    <div className="start-page__lang first-lang">
+                    <div
+                        onClick={() => setFirstLangTouched(true)}
+                        className="start-page__lang first-lang"
+                    >
+                        <Clue className="first-lang__clue" isClose={isFirstLangTouched}>
+                            click me!
+                        </Clue>
                         <LangSelector selectLang={setLangTo} currentLang={langs.to} />
                     </div>
                     <h4 className="start-page__title">Language that you want to learn</h4>

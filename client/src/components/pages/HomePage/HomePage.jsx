@@ -1,9 +1,12 @@
 import React from "react"
 import { connect } from "react-redux"
-import { Redirect } from "react-router"
 
 const HomePage = ({ langs, ...props }) => {
-    return <div className="home-page">HOME PAGE</div>
+    return (
+        <div className="home-page">
+            <h1>HOME PAGE</h1>
+        </div>
+    )
 }
 
 const mapStateToProps = (state) => ({

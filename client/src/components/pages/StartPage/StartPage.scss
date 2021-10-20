@@ -1,4 +1,5 @@
 @import "../../../assets/style/colors.scss";
+
 .start-page {
     height: 525px;
     width: 327px;
@@ -26,6 +27,13 @@
 
     &.first-lang {
         z-index: 2;
+    }
+
+    .first-lang__clue {
+        z-index: 3;
+        position: absolute;
+        left: 70%;
+        bottom: 50%;
     }
 }
 .start-page__title {

@@ -1,0 +1,51 @@
+@import "../../../assets/style/colors.scss";
+.clue {
+    transition: 0.3s;
+    display: inline-block;
+    width: max-content;
+    // animation: scale-start 0.3s ease forwards;
+}
+.clue__container {
+    position: relative;
+    padding-left: 17px;
+}
+.clue__body {
+    background-color: $text;
+    padding: 6px 13px 8px 13px;
+    border-radius: 9px;
+}
+.clue__msg {
+    position: relative;
+    color: $white;
+    font-size: 18px;
+    z-index: 2;
+}
+.clue__tail {
+    z-index: 1;
+
+    position: absolute;
+    bottom: -14px;
+    left: -0px;
+}
+.clue__tail-img {
+}
+
+@keyframes scale-start {
+    0% {
+        transform: scale(0%);
+    }
+    100% {
+        transform: scale(100%);
+    }
+}
+
+.clue-enter {
+}
+.clue-enter-active {
+    animation: scale-start 0.3s ease forwards;
+}
+.clue-exit {
+}
+.clue-exit-active {
+    animation: scale-start 0.3s ease reverse forwards;
+}
