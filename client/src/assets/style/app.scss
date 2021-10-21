@@ -1,0 +1,44 @@
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+
+        transform: translateX(400px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(-400px);
+    }
+}
+
+.page {
+    left: 0;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+// .page-enter {
+// }
+.page-enter-active {
+    animation: fade-in 0.4s ease forwards;
+}
+// .page-exit {
+// }
+.page-exit-active {
+    animation: fade-out 0.4s ease forwards;
+}
