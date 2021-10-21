@@ -44,10 +44,6 @@ router.post(
             // сохраняем в БД
             await user.save()
 
-            /// TEMP
-            console.log(`REGISTER user: ${email}`)
-            /// TEMP
-
             response.status(201).json({ message: "New user created" })
         } catch (error) {
             response.status(500).json({ message: "Something wrong" })
@@ -76,8 +72,6 @@ router.post(
 
             // если такого пользователя нету, возвращаем ошибку
             if (!user) {
-                console.log("user not found: ", user)
-
                 return response.status(400).json({ message: "User not found" })
             }
 
@@ -95,10 +89,6 @@ router.post(
             const token = jwt.sign({ userId: user.id }, config.get("jwtSecret"), {
                 expiresIn: "2h",
             })
-            /// TEMP
-            console.log(`LOGIN user: ${email}`)
-            console.log("langs: ", langs)
-            /// TEMP
             response.json({ token, userId: user.id, langs })
         } catch (error) {
             response.status(500).json({ message: "Something wrong" })

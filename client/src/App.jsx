@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { BrowserRouter, Switch } from "react-router-dom"
 import { Route, Redirect } from "react-router"
 import { connect } from "react-redux"
@@ -26,8 +26,15 @@ const routesIfUserNotAuth = [
 
 const App = ({ isReady, isAuth, initializeApp }) => {
     const routes = isAuth ? routesIfUserAuth : routesIfUserNotAuth
+    /*
+    const [routes, setRoutes] = useState(routesIfUserNotAuth)
+    useEffect(() => {
+        const routes = isAuth ? routesIfUserAuth : routesIfUserNotAuth
+        setRoutes(routes)
+    }, [isAuth]) 
+    */
 
-    React.useEffect(() => {
+    useEffect(() => {
         initializeApp()
     }, [initializeApp])
 
@@ -58,6 +65,8 @@ const App = ({ isReady, isAuth, initializeApp }) => {
                         </Route>
                     )
                 })}
+
+                {isAuth ? <Redirect to="/home" /> : <Redirect to="/entry" />}
 
                 {/* {isAuth ? (
                     <Switch>

@@ -60,9 +60,12 @@ const setAuthData = (jwtToken, id) => ({
 // thunk creator
 export const register = (email, password) => async (dispath) => {
     try {
-        await authAPI.register(email, password)
+        const lowerCaseEmail = email.toLowerCase()
 
-        await dispath(login(email, password))
+        const registrationResult = await authAPI.register(lowerCaseEmail, password)
+        console.log("reg result", registrationResult)
+
+        await dispath(login(lowerCaseEmail, password))
     } catch (error) {
         dispath(setErrorMsg(error.message))
         throw new Error(error.message)
@@ -79,7 +82,9 @@ export const logout = () => (dispath) => {
 // thunk creator
 export const login = (email, password) => async (dispath) => {
     try {
-        const data = await authAPI.login(email, password)
+        const lowerCaseEmail = email.toLowerCase()
+
+        const data = await authAPI.login(lowerCaseEmail, password)
 
         const { token, userId, langs } = data
 
