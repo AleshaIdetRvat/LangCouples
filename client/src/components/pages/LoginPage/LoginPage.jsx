@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { connect } from "react-redux"
+import { connect, useDispatch, useSelector } from "react-redux"
 import { Formik } from "formik"
 import * as yup from "yup"
 import { login } from "../../../redux/reducers/UserAuthDataReducer"
@@ -88,13 +88,16 @@ const LoginForm = ({ onSubmitLogin, className }) => {
     )
 }
 
-const LoginPage = ({ authErrorMsg, login, newNotice }) => {
+const LoginPage = () => {
+    const errorMsg = useSelector((state) => state.UserAuthData.errorMsg)
+    const dispatch = useDispatch()
+
     const onSubmitLogin = (email, password) => {
-        login(email, password)
+        dispatch(login(email, password))
     }
 
     React.useEffect(() => {
-        authErrorMsg.text && newNotice(authErrorMsg.text, "warning")
+        errorMsg.text && dispatch(newNotice(errorMsg.text, "warning"))
     })
 
     return (
@@ -106,19 +109,13 @@ const LoginPage = ({ authErrorMsg, login, newNotice }) => {
     )
 }
 
-LoginPage.propTypes = {
-    authError: PropTypes.shape({
-        text: PropTypes.string,
-        id: PropTypes.string,
-    }),
-    login: PropTypes.func,
-    newNotice: PropTypes.func,
-}
+// LoginPage.propTypes = {
+//     authError: PropTypes.shape({
+//         text: PropTypes.string,
+//         id: PropTypes.string,
+//     }),
+//     login: PropTypes.func,
+//     newNotice: PropTypes.func,
+// }
 
-const mapStateToProps = (state) => ({
-    authErrorMsg: state.UserAuthData.errorMsg,
-})
-
-const LoginPageContainer = connect(mapStateToProps, { login, newNotice })(LoginPage)
-
-export { LoginPageContainer }
+export { LoginPage }

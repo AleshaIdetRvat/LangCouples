@@ -17,7 +17,10 @@ const Header = () => {
                         <div className="header-logo__top-title">Lang</div>
                         <div className="header-logo__bottom-title">Couples</div>
                     </div>
-                    <IconProfile className="header__profile" />
+                    <button className="header__profile">
+                        <IconProfile className="header__profile-img" />
+                    </button>
+
                     <MenuBurger
                         onClick={() => setMenuOpen(!isMenuOpen)}
                         isOpen={isMenuOpen}

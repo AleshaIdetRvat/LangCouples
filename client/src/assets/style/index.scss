@@ -5,8 +5,20 @@
 @import "./default.scss";
 
 body {
-    background-color: $white;
+    background-color: var(--white);
     min-height: 100vh;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    box-shadow: 0 0 15px -10px var(--text);
+    background-color: var(--sky);
 }
 
 #root {
@@ -21,5 +33,5 @@ body {
     font-weight: 500;
     font-size: 24px;
     line-height: 102.08%;
-    color: $text;
+    color: var(--text);
 }

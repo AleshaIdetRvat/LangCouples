@@ -31,15 +31,15 @@
 
 .notice {
     opacity: 0.9;
-    color: $text;
+    color: var(--text);
     background-color: white;
 
     &.warning {
-        color: $error-text;
-        background-color: $error;
+        color: var(--error-text);
+        background-color: var(--error);
     }
     &.success {
-        color: $green;
-        background-color: $green-light;
+        color: var(--green);
+        background-color: var(--green-light);
     }
 }

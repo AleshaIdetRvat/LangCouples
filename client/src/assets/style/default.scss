@@ -8,7 +8,6 @@
 /* Убираем внутренние отступы */
 ul[class],
 ol[class] {
-    padding: 0;
 }
 
 /* Убираем внешние отступы */
@@ -27,7 +26,7 @@ blockquote,
 dl,
 dd {
     font-weight: unset;
-    margin: 0;
+    margin: unset;
 }
 
 /* Выставляем основные настройки по-умолчанию для body */
@@ -78,6 +77,10 @@ h1 {
 a {
     color: unset;
     text-decoration: none;
+}
+button {
+    background-color: unset;
+    padding: 0;
 }
 
 /* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */

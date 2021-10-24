@@ -9,13 +9,13 @@ const MenuBurger = ({ isOpen, onClick }) => {
     })
 
     return (
-        <div className={menuStyles} onClick={onClick}>
+        <button tabIndex="1" type="button" className={menuStyles} onClick={onClick}>
             <div className="menu-burger__container">
                 <div className="menu-burger__top-row" />
                 <div className="menu-burger__mid-row" />
                 <div className="menu-burger__bottom-row" />
             </div>
-        </div>
+        </button>
     )
 }
 

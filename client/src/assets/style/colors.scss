@@ -1,13 +1,27 @@
-$blue: #568de5;
-$light-blue: #84adea;
-$sky: #cbdcf7;
-$light-sky: #dce7f7;
-// $light-sky: #e3ebf6; // old version
-$white: #ecf0f5;
-$green: #70b673;
-$green-hover: #8cc58e;
-$green-light: #c4e1c5;
-$grey: #c5cfdc;
-$error: #f2a4a4;
-$error-text: #df6c6c;
-$text: #414141;
+:root {
+    --blue: #568de5;
+    --light-blue: #84adea;
+    --sky: #cbdcf7;
+    --light-sky: #dce7f7;
+    --white: #ecf0f5;
+    --green: #70b673;
+    --green-hover: #8cc58e;
+    --green-light: #c4e1c5;
+    --grey: #c5cfdc;
+    --error: #f2a4a4;
+    --error-text: #df6c6c;
+    --text: #414141;
+}
+// убрать
+// $blue: #568de5;
+// $light-blue: #84adea;
+// $sky: #cbdcf7;
+// $light-sky: #dce7f7;
+// $white: #ecf0f5;
+// $green: #70b673;
+// $green-hover: #8cc58e;
+// $green-light: #c4e1c5;
+// $grey: #c5cfdc;
+// $error: #f2a4a4;
+// $error-text: #df6c6c;
+// $text: #414141;

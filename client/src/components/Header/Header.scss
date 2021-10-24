@@ -1,10 +1,9 @@
-@import "../../assets/style/colors.scss";
-
 .header {
     position: relative;
+    min-height: 74px;
 }
 .header__container {
-    background-color: $sky;
+    background-color: var(--sky);
     padding: 16px 18px;
 }
 .header__grid {
@@ -18,27 +17,32 @@
 }
 
 .header__profile {
-    transition: 0.2s linear;
-    fill: $light-blue;
     height: 34px;
     width: 34px;
-
-    box-shadow: 0px 0px 0px 0px $sky;
+    // display: flex;
+    // align-items: center;
     border-radius: 50%;
+    box-shadow: 0px 0px 0px 0px var(--sky);
+    transition: 0.2s linear;
 
     justify-self: end;
     &:hover {
-        box-shadow: 0px 0px 0px 3px $white;
+        box-shadow: 0px 0px 0px 3px var(--white);
         @media (max-width: 768px) {
-            box-shadow: 0px 0px 0px 0px $sky;
+            box-shadow: 0px 0px 0px 0px var(--sky);
         }
     }
     &:active {
         @media (max-width: 768px) {
-            box-shadow: 0px 0px 0px 3px $white;
+            box-shadow: 0px 0px 0px 3px var(--white);
         }
-        box-shadow: 0px 0px 0px 0px $white;
+        box-shadow: 0px 0px 0px 0px var(--white);
     }
+}
+.header__profile-img {
+    fill: var(--light-blue);
+    height: 34px;
+    width: 34px;
 }
 
 .header-logo__top-title,
@@ -48,7 +52,7 @@
     font-size: 20px;
     line-height: 108.58%;
     letter-spacing: -0.04em;
-    color: $blue;
+    color: var(--blue);
 }
 
 .header-logo__top-title {
