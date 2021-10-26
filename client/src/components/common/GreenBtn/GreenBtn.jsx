@@ -8,8 +8,8 @@ const GreenBtn = ({ children, disabled, onClick, className, ...props }) => {
     })
 
     return (
-        <button onClick={onClick} className={styles} {...props}>
-            <span className="green-btn__inner-text">{children}</span>
+        <button onClick={onClick} className={styles} {...props} disabled={disabled}>
+            <span className='green-btn__inner-text'>{children}</span>
         </button>
     )
 }

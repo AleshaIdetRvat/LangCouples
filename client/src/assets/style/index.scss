@@ -9,25 +9,34 @@ body {
     min-height: 100vh;
 }
 
+:root {
+    --header-height: 74px;
+}
+
 ::-webkit-scrollbar-track {
     background-color: transparent;
 }
 ::-webkit-scrollbar {
     width: 10px;
+    @media (max-width: 425px) {
+        width: 5px;
+    }
 }
 ::-webkit-scrollbar-thumb {
-    border-radius: 5px;
+    border-radius: 4px;
     box-shadow: 0 0 15px -10px var(--text);
     background-color: var(--sky);
+    background-color: rgba(190, 190, 190, 0.5);
 }
 
 #root {
     min-height: 100vh;
 }
 .container {
-    overflow: hidden;
+    //overflow: hidden;
+    overflow: overlay;
     position: relative;
-    height: calc(100vh - 74px);
+    min-height: calc(100vh - var(--header-height));
     font-family: "Fira Sans", sans-serif;
     font-style: normal;
     font-weight: 500;

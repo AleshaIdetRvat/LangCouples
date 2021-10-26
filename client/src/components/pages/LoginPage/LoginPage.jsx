@@ -1,6 +1,5 @@
 import React from "react"
-import PropTypes from "prop-types"
-import { connect, useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { Formik } from "formik"
 import * as yup from "yup"
 import { login } from "../../../redux/reducers/UserAuthDataReducer"
@@ -49,35 +48,35 @@ const LoginForm = ({ onSubmitLogin, className }) => {
             }) => {
                 return (
                     <form onSubmit={handleSubmit} className={`${className} login-form`}>
-                        <div className="login-form__input-login">
+                        <div className='login-form__input-login'>
                             <MainInput
                                 value={values.login}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 error={errors.login}
                                 touched={touched.login}
-                                name="login"
-                                type="text"
-                                placeholder="login"
+                                name='login'
+                                type='text'
+                                placeholder='login'
                             />
                         </div>
-                        <div className="login-form__input-password">
+                        <div className='login-form__input-password'>
                             <MainInput
                                 value={values.password}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 error={errors.password}
                                 touched={touched.password}
-                                name="password"
-                                type="password"
-                                placeholder="password"
+                                name='password'
+                                type='password'
+                                placeholder='password'
                             />
                         </div>
 
                         <GreenBtn
-                            className="login-form__submit"
+                            className='login-form__submit'
                             disabled={!isValid || !dirty}
-                            type="submit"
+                            type='submit'
                         >
                             Login
                         </GreenBtn>
@@ -98,12 +97,12 @@ const LoginPage = () => {
 
     React.useEffect(() => {
         errorMsg.text && dispatch(newNotice(errorMsg.text, "warning"))
-    })
+    }, [errorMsg.text, dispatch])
 
     return (
-        <div className="login-page">
-            <div className="login-page__container sky-container">
-                <LoginForm onSubmitLogin={onSubmitLogin} className="login-page__form" />
+        <div className='login-page'>
+            <div className='login-page__container sky-container'>
+                <LoginForm onSubmitLogin={onSubmitLogin} className='login-page__form' />
             </div>
         </div>
     )

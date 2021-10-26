@@ -14,7 +14,9 @@ import "./StartPage.scss"
 
 const StartPage = (props) => {
     const { langs, setLangFrom, setLangTo, saveLangs } = props
+
     const [isFirstLangTouched, setFirstLangTouched] = React.useState(false)
+
     const history = useHistory()
 
     const onClick = () => {
@@ -23,26 +25,30 @@ const StartPage = (props) => {
     }
 
     return (
-        <div className="start-page">
-            <div className="start-page__container">
-                <div className="start-page__column">
-                    <h4 className="start-page__title">Choose your native language</h4>
+        <div className='start-page'>
+            <div className='start-page__container'>
+                <div className='start-page__column'>
+                    <h4 className='start-page__title'>Choose your native language</h4>
+
                     <div
                         onClick={() => setFirstLangTouched(true)}
-                        className="start-page__lang first-lang"
+                        className='start-page__lang first-lang'
                     >
-                        <Clue className="first-lang__clue" isClose={isFirstLangTouched}>
+                        <Clue className='first-lang__clue' isClose={isFirstLangTouched}>
                             click me!
                         </Clue>
-                        <LangSelector selectLang={setLangTo} currentLang={langs.to} />
+                        <LangSelector selectLang={setLangFrom} currentLang={langs.to} />
                     </div>
-                    <h4 className="start-page__title">Language that you want to learn</h4>
-                    <div className="start-page__lang">
-                        <LangSelector selectLang={setLangFrom} currentLang={langs.from} />
+
+                    <h4 className='start-page__title'>Language that you want to learn</h4>
+
+                    <div className='start-page__lang'>
+                        <LangSelector selectLang={setLangTo} currentLang={langs.from} />
                     </div>
+
                     <GreenBtn
                         disabled={langs.from === langs.to}
-                        className="start-page__btn"
+                        className='start-page__btn'
                         onClick={onClick}
                     >
                         Make couple

@@ -3,17 +3,26 @@
     transition: 0.3s;
     display: inline-block;
     width: max-content;
+    filter: drop-shadow(0px 0px 1px var(--text));
+
     // animation: scale-start 0.3s ease forwards;
 }
 .clue__container {
     position: relative;
     padding-left: 17px;
+    margin-left: -17px;
 }
 .clue__body {
     background-color: var(--text);
     padding: 6px 13px 8px 13px;
-    border-radius: 9px;
+    border-radius: 10px;
+    //box-shadow: 0px 0px 1px var(--text);
+
+    width: fit-content;
+    display: flex;
+    justify-content: flex-end;
 }
+
 .clue__msg {
     position: relative;
     color: var(--white);
@@ -24,8 +33,11 @@
     z-index: 1;
 
     position: absolute;
-    bottom: -14px;
+    bottom: -13.5px;
     left: -0px;
+}
+.clue-tail-center {
+    bottom: 20%;
 }
 .clue__tail-img {
 }

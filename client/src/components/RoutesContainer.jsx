@@ -1,15 +1,18 @@
 import React from "react"
 import { Route, Redirect } from "react-router"
 import { CSSTransition } from "react-transition-group"
+
 import { EntryPage } from "./pages/EntryPage/EntryPage"
 import { HomePage } from "./pages/HomePage/HomePage"
 import { LoginPage } from "./pages/LoginPage/LoginPage"
 import { RegisterPageContainer } from "./pages/RegisterPage/RegisterPage"
 import StartPage from "./pages/StartPage/StartPage"
+import { LessonPage } from "./pages/LessonPage/LessonPage"
 
 const routesIfUserAuth = [
     { path: "/home", name: "Home", Component: HomePage },
     { path: "/start", name: "Start", Component: StartPage },
+    { path: "/lesson", name: "Lesson", Component: LessonPage },
 ]
 
 const routesIfUserNotAuth = [
@@ -22,18 +25,18 @@ const RoutesContainer = ({ isAuth }) => {
     const routes = isAuth ? routesIfUserAuth : routesIfUserNotAuth
 
     return (
-        <main className="container">
+        <main className='container'>
             {routes.map(({ path, name, Component }) => {
                 return (
                     <Route path={path} key={name} exact>
                         {({ match }) => (
                             <CSSTransition
                                 in={match != null}
-                                timeout={400}
-                                classNames="page"
+                                timeout={500}
+                                classNames='page'
                                 unmountOnExit
                             >
-                                <div className="page">
+                                <div className='page'>
                                     <Component />
                                 </div>
                             </CSSTransition>
@@ -42,7 +45,7 @@ const RoutesContainer = ({ isAuth }) => {
                 )
             })}
 
-            {isAuth ? <Redirect to="/home" /> : <Redirect to="/entry" />}
+            {isAuth ? <Redirect to='/home' /> : <Redirect to='/entry' />}
         </main>
     )
 }

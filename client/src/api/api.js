@@ -11,6 +11,17 @@ export const setAuthToken = (token) =>
     })
 
 export const mainAPI = {
+    getCouples: async ({ langFrom, langTo, theme, keyword }) => {
+        try {
+            const response = await axiosInstance.get(
+                `couples?from=${langFrom}&to=${langTo}&theme=${theme}&keyword=${keyword}`
+            )
+
+            return response.data // couples
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    },
     putLangs: async (langs) => {
         try {
             await axiosInstance.put(`user/langs`, langs)
@@ -43,3 +54,18 @@ export const authAPI = {
         }
     },
 }
+
+const testAPI = {
+    testReq: async (word) => {
+        try {
+            const resData = await axios.get(
+                "https://lt-translate-test.herokuapp.com/?langpair=en-de&query=sleep&wortart=VERB"
+            )
+
+            return resData.data
+        } catch (error) {
+            throw new Error(error.response.data.message)
+        }
+    },
+}
+window.testReq = testAPI.testReq
