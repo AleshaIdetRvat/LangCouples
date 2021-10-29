@@ -1,14 +1,42 @@
 const puppeteer = require("puppeteer")
 
+const shortLangToLong = (lang) => {
+    switch (lang) {
+        case "en":
+            return "english"
+        case "ru":
+            return "russian"
+        case "de":
+            return "german"
+        default:
+            return null
+    }
+}
+
 const getCouples = async ({ langFrom, langTo, keyWord, lessonTheme }) => {
     const browser = await puppeteer.launch()
 
     let key
 
-    if (lessonTheme) {
+    if (lessonTheme && lessonTheme != undefined && lessonTheme != "undefined") {
         const pageForFindKeyWord = await browser.newPage()
 
-        const findKeyWordMainLink = `https://wordassociations.net/ru/ассоциации-к-слову/${lessonTheme}`
+        let findKeyWordMainLink
+
+        switch (langFrom) {
+            case "en":
+                findKeyWordMainLink = `https://wordassociations.net/en/words-associated-with/${lessonTheme}`
+                break
+            case "ru":
+                findKeyWordMainLink = `https://wordassociations.net/ru/ассоциации-к-слову/${lessonTheme}`
+                break
+            case "de":
+                findKeyWordMainLink = `https://wordassociations.net/de/assoziationen-mit-dem-wor/${lessonTheme}`
+                break
+            default:
+                findKeyWordMainLink = `https://wordassociations.net/ru/ассоциации-к-слову/${lessonTheme}`
+                break
+        }
 
         await pageForFindKeyWord.goto(findKeyWordMainLink)
 
@@ -33,7 +61,11 @@ const getCouples = async ({ langFrom, langTo, keyWord, lessonTheme }) => {
 
     key = key.toLowerCase()
 
-    const parseUrl = `https://context.reverso.net/translation/${langFrom}-${langTo}/${key}`
+    console.log("Key word: ", key)
+
+    const parseUrl = `https://context.reverso.net/translation/${shortLangToLong(
+        langFrom
+    )}-${shortLangToLong(langTo)}/${key}`
 
     const page = await browser.newPage()
     try {
@@ -64,19 +96,3 @@ const getCouples = async ({ langFrom, langTo, keyWord, lessonTheme }) => {
 }
 
 module.exports = getCouples
-
-// const translateBlocks = await page.$$eval(".example", (couples) => {
-//     return couples.map((coupleStr) => {
-//         const coupleArr = coupleStr.textContent
-//             .replace(/\s+/g, " ")
-//             .trim()
-//             .split(".")
-//         const couple = { from: coupleArr[0], to: coupleArr[1] }
-//         // const couple =
-//         //     !coupleArr[0] && !coupleArr[1]
-//         //         ? { from: coupleArr[0], to: coupleArr[1] }
-//         //         : null
-//         return couple
-//     })
-// })
-//translateBlocks.forEach((block, i) => console.log("couple", i, ":", block))

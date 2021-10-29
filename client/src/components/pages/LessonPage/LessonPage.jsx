@@ -1,16 +1,19 @@
-import React, { useEffect, useState, useRef } from "react"
-import { useSelector } from "react-redux"
+import React, { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { CSSTransition } from "react-transition-group"
 import { Clue } from "../../common/Clue/Clue"
 import { GreenBtn } from "../../common/GreenBtn/GreenBtn"
 import { Loader } from "../../common/Loader/Loader"
-
 import "./LessonPage.scss"
-
-const shuffle = (array, confusingWords = []) => {
+import {
+    newExample,
+    setOptionOfWords,
+    setPieceOfAnswer,
+} from "../../../redux/reducers/LessonReducer"
+const shuffle = (array, confusingItems = []) => {
     if (!array) return []
 
-    let shuffledArr = [...array, ...confusingWords]
+    let shuffledArr = [...array, ...confusingItems]
 
     for (let i = shuffledArr.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1))
@@ -53,26 +56,45 @@ const LessonWord = ({ onClick, isClose = false, ...props }) => {
 }
 
 const LessonPage = () => {
-    const { couples, isFetching } = useSelector((state) => {
-        return {
-            couples: state.PersonalData.couples,
-            isFetching: state.PersonalData.isFetching,
-        }
-    })
+    const {
+        couples,
+        isFetching,
+        exampleNumber,
+        piecesOfAnswer,
+        optionsOfWords,
+    } = useSelector((state) => state.Lesson)
 
-    const [stepIndex, setStepIndex] = useState(0)
-    const [answer, setAnswer] = useState([])
+    const dispath = useDispatch()
 
-    const [wordOptions, setWordOptions] = useState([])
+    // const [exampleNumber, setStepIndex] = useState(0)
+    //
+    // const [piecesOfAnswer, setAnswer] = useState([]) //piecesOfAnswer
+    //
+    // const [optionsOfWords, setWordOptions] = useState([]) //optionsOfWords
 
-    useEffect(() => {
-        setWordOptions(
-            shuffle(couples[stepIndex]?.to.split(" ")).map((word) => ({
-                word,
-                isChecked: false,
-            }))
-        )
-    }, [isFetching, stepIndex])
+    // useEffect(() => {
+    //     newExample()
+    // }, [isFetching, exampleNumber])
+
+    const mapToAnswerPieses = (word, i) => (
+        <LessonWord
+            onClick={() => dispath(setOptionOfWords(word))}
+            key={word + i}
+        >
+            {word}
+        </LessonWord>
+    )
+
+    const mapToOptionsOfWords = ({ word, isChecked }, i) => (
+        <WordPure
+            disabled={isChecked}
+            className={isChecked ? "--cheked-option" : ""}
+            onClick={() => dispath(setPieceOfAnswer(word))}
+            key={word + i}
+        >
+            {word}
+        </WordPure>
+    )
 
     return (
         <>
@@ -85,67 +107,30 @@ const LessonPage = () => {
                         isTailPositionCenter={true}
                         isStatic={true}
                     >
-                        {couples[stepIndex]?.from}
+                        {couples[exampleNumber - 1]?.from}
                     </Clue>
 
                     <div className='lesson-page__lists'>
                         <div className='lesson-page__list lesson-answer'>
                             <div className='lesson-answer__row'>
-                                {answer.map((word, i) => (
-                                    <LessonWord
-                                        onClick={() => {
-                                            setWordOptions(
-                                                wordOptions.map((option) =>
-                                                    option.word === word
-                                                        ? { word, isChecked: false }
-                                                        : option
-                                                )
-                                            )
-                                            setAnswer(
-                                                answer.filter(
-                                                    (otherWord) => otherWord !== word
-                                                )
-                                            )
-                                        }}
-                                        key={word + i}
-                                    >
-                                        {word}
-                                    </LessonWord>
-                                ))}
+                                {piecesOfAnswer.map(mapToAnswerPieses)}
                             </div>
                         </div>
-
-                        <hr />
 
                         <div className='lesson-page__list lesson-answer-options'>
                             <div className='lesson-answer-options__row'>
-                                {wordOptions.map(({ word, isChecked }, i) => (
-                                    <WordPure
-                                        disabled={isChecked}
-                                        className={isChecked ? "--cheked-option" : ""}
-                                        onClick={() => {
-                                            setAnswer([...answer, word])
-                                            setWordOptions(
-                                                wordOptions.map((option) =>
-                                                    option.word === word
-                                                        ? { word, isChecked: true }
-                                                        : option
-                                                )
-                                            )
-                                        }}
-                                        key={word + i}
-                                    >
-                                        {word}
-                                    </WordPure>
-                                ))}
+                                {optionsOfWords.map(mapToOptionsOfWords)}
                             </div>
                         </div>
                     </div>
+
                     <div className='lesson-page__btn-container'>
                         <GreenBtn
-                            disabled={stepIndex >= couples.length - 1}
+                            disabled={exampleNumber >= couples.length - 1}
                             className='lesson-page__next-btn'
-                            onClick={() => setStepIndex(stepIndex + 1)}
+                            onClick={() => {
+                                dispath(newExample())
+                            }}
                         >
                             Next
                         </GreenBtn>

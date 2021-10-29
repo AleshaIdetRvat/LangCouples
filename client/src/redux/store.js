@@ -4,8 +4,10 @@ import AppReducer from "./reducers/AppReducer"
 import UserAuthDataReducer from "./reducers/UserAuthDataReducer"
 import NoticeReducer from "./reducers/NoticeReducer"
 import UserPersonalDataReducer from "./reducers/UserPersonalDataReducer"
+import { LessonReducer } from "./reducers/LessonReducer"
 
 const reducers = combineReducers({
+    Lesson: LessonReducer,
     UserAuthData: UserAuthDataReducer,
     App: AppReducer,
     Notice: NoticeReducer,

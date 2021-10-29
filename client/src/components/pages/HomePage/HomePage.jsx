@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from "react-router"
-import { getCouples } from "../../../redux/reducers/UserPersonalDataReducer"
+import { getCouples } from "../../../redux/reducers/LessonReducer"
 import { GreenBtn } from "../../common/GreenBtn/GreenBtn"
 import { MainInput } from "../../common/MainInput/MainInput"
 import "./HomePage.scss"
