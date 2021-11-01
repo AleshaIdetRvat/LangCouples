@@ -1,5 +1,6 @@
 const shuffleArray = (array, confusingItems = []) => {
     if (!array) return []
+    console.log("array param", array)
 
     let shuffledArr = [...array, ...confusingItems]
 
@@ -7,6 +8,8 @@ const shuffleArray = (array, confusingItems = []) => {
         let j = Math.floor(Math.random() * (i + 1))
         ;[shuffledArr[i], shuffledArr[j]] = [shuffledArr[j], shuffledArr[i]]
     }
+
+    console.log("shuffled array ", shuffledArr)
 
     return shuffledArr
 }

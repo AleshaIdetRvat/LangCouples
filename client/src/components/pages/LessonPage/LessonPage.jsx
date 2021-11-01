@@ -9,11 +9,12 @@ import {
     createExample,
     setOptionOfWords,
     setPieceOfAnswer,
-    checkAnswer,
+    checkCurrentExample,
 } from "../../../redux/reducers/LessonReducer"
 import { ReviewModalWindow } from "./ReviewModalWindow/ReviewModalWindow"
-import "./LessonPage.scss"
+import { shuffleArray } from "../../../utils/arrayShuffle"
 import classNames from "classnames"
+import "./LessonPage.scss"
 
 const WordPure = ({ className, children, ...props }) => (
     <button className={`lesson-word ${className}`} {...props}>
@@ -79,16 +80,26 @@ const LessonPage = () => {
 
     const onClickBottomBtn = () => {
         if (isReviewed) {
+            if (couples.length - 1 === exampleNumber) {
+                console.log("__FINISH")
+                // finish move
+            }
             dispath(incrementExNumber())
-            dispath(createExample())
-        } else dispath(checkAnswer())
+            dispath(createExample(shuffleArray))
+        } else dispath(checkCurrentExample())
     }
 
     const styles = classNames({
         "lesson-page": true,
-        "lesson-page--correct": isAnswerCorrect,
-        "lesson-page--wrong": !isAnswerCorrect,
+        "lesson-page--correct": isReviewed && isAnswerCorrect,
+        "lesson-page--wrong": isReviewed && !isAnswerCorrect,
     })
+
+    const btnInnerText = isReviewed
+        ? couples.length - 1 === exampleNumber
+            ? "Finish"
+            : "Next"
+        : "Review"
 
     return (
         <>
@@ -130,7 +141,7 @@ const LessonPage = () => {
                             className='lesson-page__next-btn'
                             onClick={onClickBottomBtn}
                         >
-                            {isReviewed ? "Next" : "Review"}
+                            {btnInnerText}
                         </GreenBtn>
                     </div>
                 </div>

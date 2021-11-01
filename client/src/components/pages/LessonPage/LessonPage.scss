@@ -8,6 +8,27 @@
     min-height: 100%;
     position: absolute;
 }
+
+.lesson-page--correct {
+    .lesson-answer {
+        .lesson-word__body {
+            background-color: var(--green);
+        }
+        .lesson-word__msg {
+            color: var(--green-light);
+        }
+    }
+}
+.lesson-page--wrong {
+    .lesson-answer {
+        .lesson-word__body {
+            background-color: var(--error);
+        }
+        .lesson-word__msg {
+            color: var(--error-text);
+        }
+    }
+}
 .lesson-page__container {
     left: 0;
     top: 0;
@@ -153,7 +174,7 @@
 }
 
 .lesson-word-enter-active {
-    animation: word-animation-start 0.3s ease forwards;
+    animation: word-animation-start 0.2s ease forwards;
 }
 
 .lesson-word-exit {
@@ -164,5 +185,5 @@
 }
 
 .lesson-word-exit-active {
-    animation: word-animation-start 0.3s ease reverse forwards;
+    animation: word-animation-start 0.2s ease reverse forwards;
 }

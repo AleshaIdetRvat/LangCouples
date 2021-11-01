@@ -44,9 +44,9 @@ const getCouples = async ({ langFrom, langTo, keyWord, lessonTheme }) => {
         //const keyWordsType = "#NOUN" // Существительное
 
         key = await pageForFindKeyWord.$eval(keyWordsType, (nounBlock) => {
-            const keyWords = Array.from(nounBlock.nextSibling.querySelectorAll("a")).map(
-                (link) => link.innerText
-            )
+            const keyWords = Array.from(
+                nounBlock.nextSibling.querySelectorAll("a")
+            ).map((link) => link.innerText)
 
             const randomIndex = +(
                 (Math.random().toFixed(2) * 100) %
@@ -75,17 +75,21 @@ const getCouples = async ({ langFrom, langTo, keyWord, lessonTheme }) => {
         const translateBlocks = await page.$eval(
             "#examples-content",
             (examplesContent) => {
-                const examplesContentArr = Array.from(
+                let examplesContentArr = Array.from(
                     examplesContent.querySelectorAll(".example")
                 )
-                return examplesContentArr.map((ex) => ({
+                examplesContentArr = examplesContentArr.map((ex) => ({
                     from: ex.querySelector(".src").innerText,
                     to: ex.querySelector(".trg").innerText,
                 }))
+
+                return examplesContentArr.filter((ex) => ex.from.length <= 60)
             }
         )
 
-        translateBlocks.forEach((block, i) => console.log("couple", i, ":", block))
+        translateBlocks.forEach((block, i) =>
+            console.log("couple", i, ":", block)
+        )
 
         await browser.close()
 

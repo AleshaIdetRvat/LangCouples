@@ -3,25 +3,14 @@ const authMiddleWare = require("../middleware/auth.middleware")
 
 const getCouples = require("../src/parser/parser")
 const router = Router()
-// api/couples
-//, authMiddleWare
-
-// router.options("/", async (req, res) => {
-//     res.status(200)
-// })
 
 router.get("/", async (req, res) => {
     try {
         if (!req.query.from || !req.query.to || !req.query.keyword) {
-            return res.status(404).json({ resultCode: 1, message: "Wrong querry params" })
+            return res
+                .status(404)
+                .json({ resultCode: 1, message: "Wrong querry params" })
         }
-
-        // console.log("params: ", {
-        //     langFrom: req.query.from,
-        //     langTo: req.query.to,
-        //     keyWord: req.query.keyword,
-        //     lessonTheme: req.query.theme || false,
-        // })
 
         const couples = await getCouples({
             langFrom: req.query.from,

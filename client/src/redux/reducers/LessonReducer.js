@@ -1,6 +1,9 @@
 import { mainAPI } from "../../api/api"
+import { shuffleArray } from "../../utils/arrayShuffle"
 import { newNotice } from "./NoticeReducer"
 
+const INCREMENT_RESOLVED_EXMPLS = "INCREMENT_RESOLVED_EXMPLS"
+const INCREMENT_ALL_EXMPLS = "INCREMENT_ALL_EXMPLS"
 const INCREMENT_EX_NUM = "INCREMENT_EX_NUM"
 const SET_COUPLES = "SET_COUPLES"
 const SET_ANSWER_PIECE = "SET_ANSWER_PIECE"
@@ -16,21 +19,32 @@ const initState = {
     isFetching: true,
     isReviewed: false,
     isAnswerCorrect: false,
-    exampleNumber: 0, // Current example number
+    exampleNumber: 0, // Номер текущего примера
     piecesOfAnswer: [],
     optionsOfWords: [],
+    resolvedExamplesAmount: 0, // количество только верно решенных задач
+    allExamplesAmount: 0, // количество всех задач (ошибочные и верные)
 }
 
 const LessonReducer = (state = initState, action) => {
     switch (action.type) {
-        case CHECK_ANSWER: {
-            /// for test
-            console.log(
-                "CHECK_ANSWER",
-                state.piecesOfAnswer.map((word) => word.text).join(" "),
-                state.couples[state.exampleNumber].to
-            )
+        case INCREMENT_RESOLVED_EXMPLS: {
+            return {
+                ...state,
+                resolvedExamplesAmount: state.isAnswerCorrect
+                    ? state.resolvedExamplesAmount + 1
+                    : state.resolvedExamplesAmount,
+            }
+        }
 
+        case INCREMENT_ALL_EXMPLS: {
+            return {
+                ...state,
+                allExamplesAmount: state.allExamplesAmount + 1,
+            }
+        }
+
+        case CHECK_ANSWER: {
             return {
                 ...state,
                 isReviewed: true,
@@ -39,39 +53,32 @@ const LessonReducer = (state = initState, action) => {
                     state.couples[state.exampleNumber].to,
             }
         }
-        case CREATE_EXAMLE: {
-            console.log("EXAMPLE CREATED")
 
-            const confusingItems = state.couples[
-                Math.trunc(Math.random() * state.couples.length)
-            ]?.to
+        case CREATE_EXAMLE: {
+            const randomIndex = Math.trunc(Math.random() * state.couples.length)
+
+            const confusingItems = state.couples[randomIndex]?.to
                 .split(" ")
                 .slice(1, 4)
-
-            let shuffledOptions = [
+            // получаем и добавляем случайные 3 слова
+            // для того чтобы усложнить решение задачи
+            const confusingOptions = [
                 ...state.couples[state.exampleNumber]?.to.split(" "),
                 ...confusingItems,
             ]
-
-            for (let i = shuffledOptions.length - 1; i > 0; i--) {
-                let j = Math.floor(Math.random() * (i + 1))
-                ;[shuffledOptions[i], shuffledOptions[j]] = [
-                    shuffledOptions[j],
-                    shuffledOptions[i],
-                ]
-            }
-
-            shuffledOptions = shuffledOptions.map((word) => ({
-                text: word,
-                isChecked: false,
-                id: ID(),
-            }))
+            console.log("action func", action.shuffledFunc)
 
             return {
                 ...state,
                 isReviewed: false,
                 piecesOfAnswer: [],
-                optionsOfWords: shuffledOptions,
+                optionsOfWords: action
+                    .shuffledFunc(confusingOptions)
+                    .map((word) => ({
+                        text: word,
+                        isChecked: false,
+                        id: ID(),
+                    })),
             }
         }
 
@@ -92,6 +99,7 @@ const LessonReducer = (state = initState, action) => {
                 ),
             }
         }
+
         case SET_WORD_OPTION: {
             return {
                 ...state,
@@ -109,30 +117,51 @@ const LessonReducer = (state = initState, action) => {
                 ),
             }
         }
+
         case INCREMENT_EX_NUM: {
-            if (state.couples.length > state.exampleNumber)
+            console.log("couples.length: ", state.couples.length)
+            console.log("example number: ", state.exampleNumber)
+
+            if (state.couples.length - 1 > state.exampleNumber)
                 return {
                     ...state,
                     exampleNumber: state.exampleNumber + 1,
                 }
             return state
         }
+
         case SET_FETCHING:
             return {
                 ...state,
                 isFetching: action.isFetching,
             }
+
         case SET_COUPLES:
             return {
                 ...state,
                 couples: action.couples,
             }
+
         default:
             return state
     }
 }
 
-export const checkAnswer = () => ({
+const incrementResolvedExamplesAmount = () => ({
+    type: INCREMENT_RESOLVED_EXMPLS,
+})
+
+const incrementAllExamplesAmount = () => ({
+    type: INCREMENT_ALL_EXMPLS,
+})
+
+export const checkCurrentExample = () => (dispatch) => {
+    dispatch(checkAnswer())
+    dispatch(incrementResolvedExamplesAmount())
+    dispatch(incrementAllExamplesAmount())
+}
+
+const checkAnswer = () => ({
     type: CHECK_ANSWER,
 })
 
@@ -140,8 +169,9 @@ export const incrementExNumber = () => ({
     type: INCREMENT_EX_NUM,
 })
 
-export const createExample = () => ({
+export const createExample = (shuffledFunc) => ({
     type: CREATE_EXAMLE,
+    shuffledFunc,
 })
 
 export const setOptionOfWords = (id) => ({
@@ -181,7 +211,7 @@ export const getCouples =
 
             await dispath(setCouples(couples))
 
-            dispath(createExample())
+            dispath(createExample(shuffleArray))
         } catch (error) {
             dispath(newNotice(error.message, "warning"))
         }

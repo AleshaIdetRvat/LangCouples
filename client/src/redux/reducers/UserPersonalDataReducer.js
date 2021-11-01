@@ -2,15 +2,11 @@ import { mainAPI } from "../../api/api"
 import { newNotice } from "./NoticeReducer"
 import { setFetching } from "./LessonReducer"
 
-const INCREMENT_RESOLVED_EXMPLS = "INCREMENT_RESOLVED_EXMPLS"
-const INCREMENT_ALL_EXMPLS = "INCREMENT_ALL_EXMPLS"
 const SET_LANG_FROM = "SET_LANG_FROM"
 const SET_LANG_TO = "SET_LANG_TO"
 
 const initState = {
     langs: { from: "en", to: "ru" },
-    resolvedExamplesAmount: 0,
-    allExamplesAmount: 0,
 }
 
 const UserPersonalDataReducer = (state = initState, action) => {
@@ -29,14 +25,6 @@ const UserPersonalDataReducer = (state = initState, action) => {
             return state
     }
 }
-
-export const incrementResolvedExamplesAmount = () => ({
-    type: INCREMENT_RESOLVED_EXMPLS,
-})
-
-export const incrementAllExamplesAmount = () => ({
-    type: INCREMENT_ALL_EXMPLS,
-})
 
 export const setLangFrom = (lang) => ({
     type: SET_LANG_FROM,
