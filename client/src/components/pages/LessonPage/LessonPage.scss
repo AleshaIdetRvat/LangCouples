@@ -17,9 +17,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 24px 24px 0px;
+    padding: 24px 0 0px;
+    @media screen {
+    }
     //height: 100%;
-    min-height: 494px;
+    min-height: 568px; // iphone 5
     max-width: 768px;
     margin: 0 auto;
 }
@@ -29,11 +31,14 @@
     justify-content: center;
     text-align: justify;
     width: 100%;
-    padding-bottom: 24px;
+    padding: 0 24px 24px;
     filter: drop-shadow(0px 4px 5px var(--trns-text));
 }
 
 .lesson-page__lists {
+    padding: 0 8px;
+    position: relative;
+    z-index: 1;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -42,11 +47,17 @@
 }
 
 .lesson-page__list {
+    padding: 10px 0;
 }
 .lesson-page__btn-container {
-    padding-bottom: 28px;
+    box-shadow: 0px 0px 10px var(--white);
+    z-index: 5;
+    padding: 0 24px 28px;
+    width: 100%;
 }
 .lesson-page__next-btn {
+    width: 100%;
+
     padding-left: 40px;
     padding-right: 40px;
     border-radius: 19px;
@@ -63,6 +74,7 @@
     gap: 8px;
 }
 .lesson-answer-options {
+    overflow: overlay;
     flex: 1 0 50%;
 }
 
@@ -121,15 +133,13 @@
 }
 .lesson-word__msg {
     color: white;
-    font-size: 18px;
-    @media screen {
-    }
+    font-size: 1.13rem;
     white-space: nowrap;
 }
 
-@keyframes opacity-start {
+@keyframes word-animation-start {
     0% {
-        transform: scale(0%);
+        transform: scale(50%);
         opacity: 0;
     }
     100% {
@@ -143,15 +153,16 @@
 }
 
 .lesson-word-enter-active {
-    animation: opacity-start 0.3s ease forwards;
+    animation: word-animation-start 0.3s ease forwards;
 }
 
 .lesson-word-exit {
 }
+
 .lesson-word-exit-done {
     opacity: 0;
 }
 
 .lesson-word-exit-active {
-    animation: opacity-start 0.3s ease reverse forwards;
+    animation: word-animation-start 0.3s ease reverse forwards;
 }

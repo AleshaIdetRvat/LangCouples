@@ -1,27 +1,19 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { CSSTransition } from "react-transition-group"
 import { Clue } from "../../common/Clue/Clue"
 import { GreenBtn } from "../../common/GreenBtn/GreenBtn"
 import { Loader } from "../../common/Loader/Loader"
-import "./LessonPage.scss"
 import {
-    newExample,
+    incrementExNumber,
+    createExample,
     setOptionOfWords,
     setPieceOfAnswer,
+    checkAnswer,
 } from "../../../redux/reducers/LessonReducer"
-const shuffle = (array, confusingItems = []) => {
-    if (!array) return []
-
-    let shuffledArr = [...array, ...confusingItems]
-
-    for (let i = shuffledArr.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1))
-        ;[shuffledArr[i], shuffledArr[j]] = [shuffledArr[j], shuffledArr[i]]
-    }
-
-    return shuffledArr
-}
+import { ReviewModalWindow } from "./ReviewModalWindow/ReviewModalWindow"
+import "./LessonPage.scss"
+import classNames from "classnames"
 
 const WordPure = ({ className, children, ...props }) => (
     <button className={`lesson-word ${className}`} {...props}>
@@ -62,52 +54,60 @@ const LessonPage = () => {
         exampleNumber,
         piecesOfAnswer,
         optionsOfWords,
+        isReviewed,
+        isAnswerCorrect,
     } = useSelector((state) => state.Lesson)
 
     const dispath = useDispatch()
 
-    // const [exampleNumber, setStepIndex] = useState(0)
-    //
-    // const [piecesOfAnswer, setAnswer] = useState([]) //piecesOfAnswer
-    //
-    // const [optionsOfWords, setWordOptions] = useState([]) //optionsOfWords
-
-    // useEffect(() => {
-    //     newExample()
-    // }, [isFetching, exampleNumber])
-
-    const mapToAnswerPieses = (word, i) => (
-        <LessonWord
-            onClick={() => dispath(setOptionOfWords(word))}
-            key={word + i}
-        >
-            {word}
+    const mapToAnswerPieses = ({ text, id }) => (
+        <LessonWord onClick={() => dispath(setOptionOfWords(id))} key={id}>
+            {text}
         </LessonWord>
     )
 
-    const mapToOptionsOfWords = ({ word, isChecked }, i) => (
+    const mapToOptionsOfWords = ({ text, isChecked, id }) => (
         <WordPure
             disabled={isChecked}
             className={isChecked ? "--cheked-option" : ""}
-            onClick={() => dispath(setPieceOfAnswer(word))}
-            key={word + i}
+            onClick={() => dispath(setPieceOfAnswer({ text, id }))}
+            key={id}
         >
-            {word}
+            {text}
         </WordPure>
     )
 
+    const onClickBottomBtn = () => {
+        if (isReviewed) {
+            dispath(incrementExNumber())
+            dispath(createExample())
+        } else dispath(checkAnswer())
+    }
+
+    const styles = classNames({
+        "lesson-page": true,
+        "lesson-page--correct": isAnswerCorrect,
+        "lesson-page--wrong": !isAnswerCorrect,
+    })
+
     return (
         <>
+            <ReviewModalWindow
+                answerText={couples[exampleNumber]?.to}
+                isReviewed={isReviewed}
+                isCorrect={isAnswerCorrect}
+            />
+
             <Loader isLoading={isFetching} />
 
-            <div className='lesson-page'>
+            <div className={styles}>
                 <div className='lesson-page__container'>
                     <Clue
                         className='lesson-page__question'
                         isTailPositionCenter={true}
                         isStatic={true}
                     >
-                        {couples[exampleNumber - 1]?.from}
+                        {couples[exampleNumber]?.from}
                     </Clue>
 
                     <div className='lesson-page__lists'>
@@ -126,13 +126,11 @@ const LessonPage = () => {
 
                     <div className='lesson-page__btn-container'>
                         <GreenBtn
-                            disabled={exampleNumber >= couples.length - 1}
+                            // disabled={exampleNumber >= couples.length - 1}
                             className='lesson-page__next-btn'
-                            onClick={() => {
-                                dispath(newExample())
-                            }}
+                            onClick={onClickBottomBtn}
                         >
-                            Next
+                            {isReviewed ? "Next" : "Review"}
                         </GreenBtn>
                     </div>
                 </div>

@@ -1,0 +1,63 @@
+.review-modal {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    bottom: 83px;
+    left: 0px;
+    right: 0px;
+}
+
+.review-modal__body {
+    position: absolute;
+    z-index: 3;
+
+    bottom: 17px;
+    left: 14px;
+    right: 14px;
+    height: min-content;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-radius: 10px;
+
+    padding: 10px 12px;
+
+    .review-modal__title,
+    .review-modal__answer {
+        font-size: 1.13rem;
+        line-height: 100%;
+    }
+}
+
+.review-modal--wrong {
+    .review-modal__body {
+        background-color: var(--error);
+    }
+
+    .review-modal__title {
+        color: var(--error-text);
+    }
+    .review-modal__answer {
+        color: var(--white);
+    }
+}
+
+.review-modal--correct {
+    .review-modal__body {
+        background-color: var(--green-light);
+    }
+    .review-modal__title {
+        color: var(--green-hover);
+    }
+}
+
+.review-modal-enter {
+}
+.review-modal-enter-active {
+    animation: word-animation-start 0.2s ease forwards;
+}
+.review-modal-exit {
+}
+.review-modal-exit-active {
+    animation: word-animation-start 0.2s ease reverse forwards;
+}

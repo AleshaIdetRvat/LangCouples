@@ -62,7 +62,10 @@ export const register = (email, password) => async (dispath) => {
     try {
         const lowerCaseEmail = email.toLowerCase()
 
-        const registrationResult = await authAPI.register(lowerCaseEmail, password)
+        const registrationResult = await authAPI.register(
+            lowerCaseEmail,
+            password
+        )
         console.log("reg result", registrationResult)
 
         await dispath(login(lowerCaseEmail, password))
@@ -76,7 +79,10 @@ export const register = (email, password) => async (dispath) => {
 export const logout = () => (dispath) => {
     dispath(setAuthData(null, null))
     dispath(setIsAuth(false))
-    localStorage.setItem(userDataStorage, JSON.stringify({ userId: null, token: null }))
+    localStorage.setItem(
+        userDataStorage,
+        JSON.stringify({ userId: null, token: null })
+    )
 }
 
 // thunk creator
@@ -84,9 +90,9 @@ export const login = (email, password) => async (dispath) => {
     try {
         const lowerCaseEmail = email.toLowerCase()
 
-        const data = await authAPI.login(lowerCaseEmail, password)
+        const authData = await authAPI.login(lowerCaseEmail, password)
 
-        const { token, userId, langs } = data
+        const { token, userId, langs } = authData
 
         if (langs !== null) {
             setLangFrom(langs.from)
@@ -99,7 +105,10 @@ export const login = (email, password) => async (dispath) => {
 
         dispath(setIsAuth(true))
 
-        localStorage.setItem(userDataStorage, JSON.stringify({ userId, token, langs }))
+        localStorage.setItem(
+            userDataStorage,
+            JSON.stringify({ userId, token, langs })
+        )
     } catch (error) {
         dispath(setErrorMsg(error.message))
     }

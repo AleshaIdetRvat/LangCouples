@@ -1,6 +1,5 @@
 import { mainAPI } from "../../api/api"
 import { newNotice } from "./NoticeReducer"
-import { shuffleArray } from "../../utils/arrayShuffle"
 
 const INCREMENT_EX_NUM = "INCREMENT_EX_NUM"
 const SET_COUPLES = "SET_COUPLES"
@@ -8,10 +7,15 @@ const SET_ANSWER_PIECE = "SET_ANSWER_PIECE"
 const SET_WORD_OPTION = "SET_WORD_OPTION"
 const CREATE_EXAMLE = "CREATE_EXAMLE"
 const SET_FETCHING = "SET_FETCHING"
+const CHECK_ANSWER = "CHECK_ANSWER"
+
+const ID = () => "_" + Math.random().toString(36).substr(2, 9)
 
 const initState = {
     couples: [],
     isFetching: true,
+    isReviewed: false,
+    isAnswerCorrect: false,
     exampleNumber: 0, // Current example number
     piecesOfAnswer: [],
     optionsOfWords: [],
@@ -19,7 +23,25 @@ const initState = {
 
 const LessonReducer = (state = initState, action) => {
     switch (action.type) {
+        case CHECK_ANSWER: {
+            /// for test
+            console.log(
+                "CHECK_ANSWER",
+                state.piecesOfAnswer.map((word) => word.text).join(" "),
+                state.couples[state.exampleNumber].to
+            )
+
+            return {
+                ...state,
+                isReviewed: true,
+                isAnswerCorrect:
+                    state.piecesOfAnswer.map((word) => word.text).join(" ") ===
+                    state.couples[state.exampleNumber].to,
+            }
+        }
         case CREATE_EXAMLE: {
+            console.log("EXAMPLE CREATED")
+
             const confusingItems = state.couples[
                 Math.trunc(Math.random() * state.couples.length)
             ]?.to
@@ -30,7 +52,6 @@ const LessonReducer = (state = initState, action) => {
                 ...state.couples[state.exampleNumber]?.to.split(" "),
                 ...confusingItems,
             ]
-            console.log("shuffldOptions: ", shuffledOptions)
 
             for (let i = shuffledOptions.length - 1; i > 0; i--) {
                 let j = Math.floor(Math.random() * (i + 1))
@@ -41,12 +62,15 @@ const LessonReducer = (state = initState, action) => {
             }
 
             shuffledOptions = shuffledOptions.map((word) => ({
-                word,
+                text: word,
                 isChecked: false,
+                id: ID(),
             }))
 
             return {
                 ...state,
+                isReviewed: false,
+                piecesOfAnswer: [],
                 optionsOfWords: shuffledOptions,
             }
         }
@@ -54,11 +78,14 @@ const LessonReducer = (state = initState, action) => {
         case SET_ANSWER_PIECE: {
             return {
                 ...state,
-                piecesOfAnswer: [...state.piecesOfAnswer, action.piece],
+                piecesOfAnswer: [
+                    ...state.piecesOfAnswer,
+                    { text: action.word.text, id: action.word.id },
+                ],
                 optionsOfWords: state.optionsOfWords.map((option) =>
-                    option.word === action.piece
+                    option.id === action.word.id
                         ? {
-                              word: action.piece,
+                              ...option,
                               isChecked: true,
                           }
                         : option
@@ -69,12 +96,13 @@ const LessonReducer = (state = initState, action) => {
             return {
                 ...state,
                 piecesOfAnswer: state.piecesOfAnswer.filter(
-                    (otherWord) => otherWord !== action.option
+                    (otherWord) => otherWord.id !== action.id
                 ),
+
                 optionsOfWords: state.optionsOfWords.map((option) =>
-                    option.word === action.option
+                    option.id === action.id
                         ? {
-                              word: action.option,
+                              ...option,
                               isChecked: false,
                           }
                         : option
@@ -104,28 +132,26 @@ const LessonReducer = (state = initState, action) => {
     }
 }
 
-export const newExample = () => (dispath) => {
-    dispath(createExample())
+export const checkAnswer = () => ({
+    type: CHECK_ANSWER,
+})
 
-    dispath(incrementExNumber())
-}
-
-const incrementExNumber = () => ({
+export const incrementExNumber = () => ({
     type: INCREMENT_EX_NUM,
 })
 
-const createExample = () => ({
+export const createExample = () => ({
     type: CREATE_EXAMLE,
 })
 
-export const setOptionOfWords = (option) => ({
+export const setOptionOfWords = (id) => ({
     type: SET_WORD_OPTION,
-    option,
+    id,
 })
 
-export const setPieceOfAnswer = (piece) => ({
+export const setPieceOfAnswer = (word) => ({
     type: SET_ANSWER_PIECE,
-    piece,
+    word,
 })
 
 export const setFetching = (isFetching) => ({
@@ -155,7 +181,7 @@ export const getCouples =
 
             await dispath(setCouples(couples))
 
-            dispath(newExample())
+            dispath(createExample())
         } catch (error) {
             dispath(newNotice(error.message, "warning"))
         }
