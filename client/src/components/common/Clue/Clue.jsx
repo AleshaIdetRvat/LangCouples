@@ -17,7 +17,7 @@ const Clue = ({
     const [height, setHeight] = React.useState(0)
 
     React.useEffect(() => {
-        setHeight(clueContainer.current.clientHeight)
+        clueContainer.current && setHeight(clueContainer.current.clientHeight)
     })
 
     const CluePure = (props) => (
@@ -28,7 +28,9 @@ const Clue = ({
                 </div>
                 <div
                     className={`clue__tail ${
-                        isTailPositionCenter && height > 40 ? "clue-tail-center" : ""
+                        isTailPositionCenter && height > 40
+                            ? "clue-tail-center"
+                            : ""
                     }`}
                 >
                     <svg
@@ -60,7 +62,10 @@ const Clue = ({
             unmountOnExit
             classNames='clue'
         >
-            <CluePure onClick={() => !isStatic && setShow(!isShow)} {...props} />
+            <CluePure
+                onClick={() => !isStatic && setShow(!isShow)}
+                {...props}
+            />
         </CSSTransition>
     )
 }

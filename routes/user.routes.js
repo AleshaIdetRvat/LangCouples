@@ -8,7 +8,9 @@ router.put("/langs", authMiddleWare, async (req, res) => {
         const langs = req.body
 
         if (langs.from === langs.to)
-            return res.status(400).json({ message: "Languages must be different" })
+            return res
+                .status(400)
+                .json({ message: "Languages must be different" })
 
         const user = await User.findById(req.user.userId)
 
@@ -20,7 +22,32 @@ router.put("/langs", authMiddleWare, async (req, res) => {
 
         res.sendStatus(200)
     } catch (error) {
-        res.status(500).json({ message: "Something wrong , ERROR: " + error.message })
+        res.status(500).json({
+            message: "Something error , ERROR: " + error.message,
+        })
+    }
+})
+
+router.put("/exercises", authMiddleWare, async (req, res) => {
+    try {
+        const exercises = req.body
+
+        const user = await User.findById(req.user.userId)
+
+        if (!user) return res.status(400).json({ message: "User not found" })
+
+        user.exercises = {
+            completed: user.exercises.completed + exercises.completed,
+            solved: user.exercises.solved + exercises.solved,
+        }
+
+        await user.save()
+
+        res.sendStatus(200)
+    } catch (error) {
+        res.status(500).json({
+            message: "Something error , ERROR: " + error.message,
+        })
     }
 })
 

@@ -1,4 +1,5 @@
 import React from "react"
+import { useHistory } from "react-router"
 import { useDispatch, useSelector } from "react-redux"
 import { CSSTransition } from "react-transition-group"
 import { Clue } from "../../common/Clue/Clue"
@@ -10,6 +11,7 @@ import {
     setOptionOfWords,
     setPieceOfAnswer,
     checkCurrentExample,
+    finishLesson,
 } from "../../../redux/reducers/LessonReducer"
 import { ReviewModalWindow } from "./ReviewModalWindow/ReviewModalWindow"
 import { shuffleArray } from "../../../utils/arrayShuffle"
@@ -57,9 +59,12 @@ const LessonPage = () => {
         optionsOfWords,
         isReviewed,
         isAnswerCorrect,
+        exercises,
     } = useSelector((state) => state.Lesson)
 
     const dispath = useDispatch()
+
+    const history = useHistory()
 
     const mapToAnswerPieses = ({ text, id }) => (
         <LessonWord onClick={() => dispath(setOptionOfWords(id))} key={id}>
@@ -80,10 +85,12 @@ const LessonPage = () => {
 
     const onClickBottomBtn = () => {
         if (isReviewed) {
+            if (couples.length === exampleNumber) {
+                dispath(finishLesson(exercises))
+                history.push("/home")
+            }
             if (couples.length - 1 === exampleNumber) {
                 dispath(incrementExNumber())
-                console.log("__FINISH")
-                // finish move
             } else if (exampleNumber < couples.length - 1) {
                 dispath(incrementExNumber())
                 dispath(createExample(shuffleArray))

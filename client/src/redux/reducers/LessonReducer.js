@@ -22,12 +22,10 @@ const initState = {
     exampleNumber: 0, // Номер текущего примера
     piecesOfAnswer: [],
     optionsOfWords: [],
-    // exercises: {
-    //     completed: 0,
-    //     solved: 0,
-    // },
-    resolvedExamplesAmount: 0, // количество только верно решенных задач
-    allExamplesAmount: 0, // количество всех задач (ошибочные и верные)
+    exercises: {
+        completed: 0, // количество всех задач (ошибочные и верные)
+        solved: 0, // количество только верно решенных задач
+    },
 }
 
 const LessonReducer = (state = initState, action) => {
@@ -35,16 +33,24 @@ const LessonReducer = (state = initState, action) => {
         case INCREMENT_RESOLVED_EXMPLS: {
             return {
                 ...state,
-                resolvedExamplesAmount: state.isAnswerCorrect
-                    ? state.resolvedExamplesAmount + 1
-                    : state.resolvedExamplesAmount,
+                exercises: {
+                    ...state.exercises,
+                    solved: state.isAnswerCorrect
+                        ? state.exercises.solved + 1
+                        : state.exercises.solved,
+                },
             }
         }
 
         case INCREMENT_ALL_EXMPLS: {
+            console.log("INCREMENT_ALL_EXMPLS", state.exercises.completed)
+
             return {
                 ...state,
-                allExamplesAmount: state.allExamplesAmount + 1,
+                exercises: {
+                    solved: state.exercises.solved,
+                    completed: state.exercises.completed + 1,
+                },
             }
         }
 
@@ -72,7 +78,9 @@ const LessonReducer = (state = initState, action) => {
             ]
 
             return {
+                //
                 ...state,
+
                 isReviewed: false,
                 piecesOfAnswer: [],
                 optionsOfWords: action
@@ -141,7 +149,16 @@ const LessonReducer = (state = initState, action) => {
 
         case SET_COUPLES:
             return {
-                ...state,
+                isFetching: true,
+                isReviewed: false,
+                isAnswerCorrect: false,
+                exampleNumber: 0,
+                piecesOfAnswer: [],
+                optionsOfWords: [],
+                exercises: {
+                    completed: 0,
+                    solved: 0,
+                },
                 couples: action.couples,
             }
 
@@ -150,18 +167,18 @@ const LessonReducer = (state = initState, action) => {
     }
 }
 
-const incrementResolvedExamplesAmount = () => ({
+const incrementSolvedExercises = () => ({
     type: INCREMENT_RESOLVED_EXMPLS,
 })
 
-const incrementAllExamplesAmount = () => ({
+const incrementAllExercises = () => ({
     type: INCREMENT_ALL_EXMPLS,
 })
 
 export const checkCurrentExample = () => (dispatch) => {
     dispatch(checkAnswer())
-    dispatch(incrementResolvedExamplesAmount())
-    dispatch(incrementAllExamplesAmount())
+    dispatch(incrementSolvedExercises())
+    dispatch(incrementAllExercises())
 }
 
 const checkAnswer = () => ({
@@ -221,5 +238,19 @@ export const getCouples =
 
         dispath(setFetching(false))
     }
+
+export const finishLesson = (exercises) => async (dispath) => {
+    dispath(setFetching(true))
+
+    try {
+        await mainAPI.updateStatisticOfExercises(exercises)
+
+        dispath(newNotice("Exercise complete!", "success"))
+    } catch (error) {
+        dispath(newNotice(error.message, "warning"))
+    }
+
+    dispath(setFetching(false))
+}
 
 export { LessonReducer }

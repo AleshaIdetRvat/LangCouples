@@ -28,22 +28,35 @@ const StartPage = (props) => {
         <div className='start-page'>
             <div className='start-page__container'>
                 <div className='start-page__column'>
-                    <h4 className='start-page__title'>Choose your native language</h4>
+                    <h4 className='start-page__title'>
+                        Choose your native language
+                    </h4>
 
                     <div
                         onClick={() => setFirstLangTouched(true)}
                         className='start-page__lang first-lang'
                     >
-                        <Clue className='first-lang__clue' isClose={isFirstLangTouched}>
+                        <Clue
+                            className='first-lang__clue'
+                            isClose={isFirstLangTouched}
+                        >
                             click me!
                         </Clue>
-                        <LangSelector selectLang={setLangFrom} currentLang={langs.to} />
+                        <LangSelector
+                            selectLang={setLangFrom}
+                            currentLang={langs.from}
+                        />
                     </div>
 
-                    <h4 className='start-page__title'>Language that you want to learn</h4>
+                    <h4 className='start-page__title'>
+                        Language that you want to learn
+                    </h4>
 
                     <div className='start-page__lang'>
-                        <LangSelector selectLang={setLangTo} currentLang={langs.from} />
+                        <LangSelector
+                            selectLang={setLangTo}
+                            currentLang={langs.to}
+                        />
                     </div>
 
                     <GreenBtn
@@ -70,4 +83,6 @@ StartPage.propTypes = {
 
 const mapStateToProps = (state) => ({ langs: state.PersonalData.langs })
 
-export default connect(mapStateToProps, { setLangFrom, setLangTo, saveLangs })(StartPage)
+export default connect(mapStateToProps, { setLangFrom, setLangTo, saveLangs })(
+    StartPage
+)

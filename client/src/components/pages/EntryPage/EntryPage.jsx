@@ -5,27 +5,27 @@ import "./EntryPage.scss"
 
 const EntryPage = () => {
     return (
-        <div className="entry-page">
-            <div className="entry-page__container">
-                <div className="entry-page__welcome">
-                    <ul className="entry-page__title">
-                        <li>Hello dear friend,</li>
-                        <li>you can</li>
-                    </ul>
+        <article className='entry-page'>
+            <div className='entry-page__container'>
+                <div className='entry-page__welcome'>
+                    <div className='entry-page__title'>
+                        <h3>Hello dear friend,</h3>
+                        <h3>you can</h3>
+                    </div>
                 </div>
-                <div className="sky-container">
-                    <div className="entry-page__sign-up entry-sign-up">
-                        <div className="entry-sign-up__login">
-                            <Link to="/login">
-                                <GreenBtn className="entry-sign-up__login-btn">
+                <div className='sky-container'>
+                    <div className='entry-page__sign-up entry-sign-up'>
+                        <div className='entry-sign-up__login'>
+                            <Link to='/login'>
+                                <GreenBtn className='entry-sign-up__login-btn'>
                                     Login
                                 </GreenBtn>
                             </Link>
                         </div>
-                        <span className="entry-sign-up__separator">or</span>
-                        <div className="entry-sign-up__register">
-                            <Link to="/register">
-                                <GreenBtn className="entry-sign-up__reg-btn">
+                        <span className='entry-sign-up__separator'>or</span>
+                        <div className='entry-sign-up__register'>
+                            <Link to='/register'>
+                                <GreenBtn className='entry-sign-up__reg-btn'>
                                     Register
                                 </GreenBtn>
                             </Link>
@@ -33,7 +33,7 @@ const EntryPage = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </article>
     )
 }
 

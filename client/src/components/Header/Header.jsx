@@ -28,11 +28,13 @@ const Header = () => {
                     : 0
 
             barStyle.transform = `translate(${-100 + translateXValue}%)`
-            if (allCouplesLength !== 0 && allCouplesLength === exampleNumber) {
+            if (allCouplesLength !== 0 && allCouplesLength !== exampleNumber) {
+                barStyle.background = "var(--green)"
+            } else if (allCouplesLength === exampleNumber) {
                 barStyle.background = "var(--blue)"
             }
         }
-    }, [location, exampleNumber])
+    }, [location, exampleNumber, allCouplesLength])
 
     const headerStyles = classNames("header", {})
 

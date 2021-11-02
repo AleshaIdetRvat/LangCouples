@@ -29,12 +29,22 @@ export const mainAPI = {
             throw new Error(error.response.data.message)
         }
     },
+    updateStatisticOfExercises: async (exercises) => {
+        try {
+            await axiosInstance.put(`user/exercises`, exercises)
+        } catch (error) {
+            throw new Error(error.response.data.message)
+        }
+    },
 }
 
 export const authAPI = {
     login: async (email, password) => {
         try {
-            const resData = await axiosInstance.post(`auth/login`, { email, password })
+            const resData = await axiosInstance.post(`auth/login`, {
+                email,
+                password,
+            })
 
             return resData.data
         } catch (error) {
@@ -54,18 +64,3 @@ export const authAPI = {
         }
     },
 }
-
-const testAPI = {
-    testReq: async (word) => {
-        try {
-            const resData = await axios.get(
-                "https://lt-translate-test.herokuapp.com/?langpair=en-de&query=sleep&wortart=VERB"
-            )
-
-            return resData.data
-        } catch (error) {
-            throw new Error(error.response.data.message)
-        }
-    },
-}
-window.testReq = testAPI.testReq
