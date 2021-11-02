@@ -22,6 +22,10 @@ const initState = {
     exampleNumber: 0, // Номер текущего примера
     piecesOfAnswer: [],
     optionsOfWords: [],
+    // exercises: {
+    //     completed: 0,
+    //     solved: 0,
+    // },
     resolvedExamplesAmount: 0, // количество только верно решенных задач
     allExamplesAmount: 0, // количество всех задач (ошибочные и верные)
 }
@@ -66,7 +70,6 @@ const LessonReducer = (state = initState, action) => {
                 ...state.couples[state.exampleNumber]?.to.split(" "),
                 ...confusingItems,
             ]
-            console.log("action func", action.shuffledFunc)
 
             return {
                 ...state,
@@ -122,7 +125,7 @@ const LessonReducer = (state = initState, action) => {
             console.log("couples.length: ", state.couples.length)
             console.log("example number: ", state.exampleNumber)
 
-            if (state.couples.length - 1 > state.exampleNumber)
+            if (state.couples.length > state.exampleNumber)
                 return {
                     ...state,
                     exampleNumber: state.exampleNumber + 1,

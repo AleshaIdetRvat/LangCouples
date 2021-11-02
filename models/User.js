@@ -9,7 +9,7 @@ const schema = new Schema({
     },
     exercises: {
         completed: { type: Number, default: 0 },
-        mistakes: { type: Number, default: 0 },
+        solved: { type: Number, default: 0 },
     },
 })
 

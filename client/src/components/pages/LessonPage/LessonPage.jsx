@@ -81,12 +81,16 @@ const LessonPage = () => {
     const onClickBottomBtn = () => {
         if (isReviewed) {
             if (couples.length - 1 === exampleNumber) {
+                dispath(incrementExNumber())
                 console.log("__FINISH")
                 // finish move
+            } else if (exampleNumber < couples.length - 1) {
+                dispath(incrementExNumber())
+                dispath(createExample(shuffleArray))
             }
-            dispath(incrementExNumber())
-            dispath(createExample(shuffleArray))
-        } else dispath(checkCurrentExample())
+        } else {
+            dispath(checkCurrentExample())
+        }
     }
 
     const styles = classNames({
@@ -96,7 +100,7 @@ const LessonPage = () => {
     })
 
     const btnInnerText = isReviewed
-        ? couples.length - 1 === exampleNumber
+        ? couples.length === exampleNumber
             ? "Finish"
             : "Next"
         : "Review"
@@ -104,7 +108,13 @@ const LessonPage = () => {
     return (
         <>
             <ReviewModalWindow
-                answerText={couples[exampleNumber]?.to}
+                answerText={
+                    couples[
+                        exampleNumber !== couples.length
+                            ? exampleNumber
+                            : exampleNumber - 1
+                    ]?.to
+                }
                 isReviewed={isReviewed}
                 isCorrect={isAnswerCorrect}
             />
@@ -118,7 +128,13 @@ const LessonPage = () => {
                         isTailPositionCenter={true}
                         isStatic={true}
                     >
-                        {couples[exampleNumber]?.from}
+                        {
+                            couples[
+                                exampleNumber !== couples.length
+                                    ? exampleNumber
+                                    : exampleNumber - 1
+                            ]?.from
+                        }
                     </Clue>
 
                     <div className='lesson-page__lists'>
