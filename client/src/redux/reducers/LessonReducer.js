@@ -245,7 +245,7 @@ export const finishLesson = (exercises) => async (dispath) => {
     try {
         await mainAPI.updateStatisticOfExercises(exercises)
 
-        dispath(newNotice("Exercise complete!", "success"))
+        dispath(newNotice("Exercise result saved!", "success"))
     } catch (error) {
         dispath(newNotice(error.message, "warning"))
     }

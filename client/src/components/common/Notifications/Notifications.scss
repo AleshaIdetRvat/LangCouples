@@ -1,16 +1,16 @@
-@import "../../../assets/style/colors.scss";
-
 .notifications {
     position: absolute;
     z-index: 20;
-    top: 100%;
+    top: 74px;
     left: 0;
     width: 100%;
+    width: auto;
     height: min-content;
 }
 
 .notifications__container {
     //padding: 10px;
+    width: 100%;
 }
 
 .notifications__row {
@@ -21,6 +21,7 @@
 }
 
 .notifications__item {
+    cursor: pointer;
     &:first-child {
         margin-top: 10px;
     }

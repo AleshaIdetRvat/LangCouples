@@ -1,23 +1,36 @@
 import React from "react"
-import { useLocation } from "react-router"
-import { useSelector } from "react-redux"
+import { useLocation, useHistory } from "react-router"
+import { useDispatch, useSelector } from "react-redux"
 import classNames from "classnames"
 import { IconProfile } from "../../assets/image/IconProfile"
-import { MenuBurger } from "./MenuBurger/MenuBurger"
+import { MenuBurgerBtn } from "./MenuBurgerBtn/MenuBurgerBtn"
 import Notifications from "../common/Notifications/Notifications"
+import { finishLesson } from "../../redux/reducers/LessonReducer"
+import { Menu } from "./Menu/Menu"
 import "./Header.scss"
 
 const Header = () => {
-    const [allCouplesLength, exampleNumber] = useSelector((state) => [
-        state.Lesson.couples.length,
-        state.Lesson.exampleNumber,
-    ])
+    const [allCouplesLength, exampleNumber, exercises] = useSelector(
+        ({ Lesson }) => [
+            Lesson.couples.length,
+            Lesson.exampleNumber,
+            Lesson.exercises,
+        ]
+    )
+
+    const dispatch = useDispatch()
 
     const [isMenuOpen, setMenuOpen] = React.useState(false)
 
     const location = useLocation()
+    const history = useHistory()
 
     const progressBarRef = React.useRef()
+
+    const finishExercise = () => {
+        dispatch(finishLesson(exercises))
+        history.push("/home")
+    }
 
     React.useEffect(() => {
         if (progressBarRef.current && progressBarRef.current.style) {
@@ -41,6 +54,11 @@ const Header = () => {
     return (
         <header className={headerStyles}>
             <Notifications />
+            <Menu
+                closeMenu={() => setMenuOpen(false)}
+                isMenuOpen={isMenuOpen}
+            />
+
             <div className='header__container'>
                 <div className='header__grid'>
                     {location.pathname === "/lesson" ? (
@@ -53,9 +71,9 @@ const Header = () => {
                                     />
                                 </div>
                             </div>
-                            <MenuBurger
+                            <MenuBurgerBtn
                                 aria-label='finish the exercize'
-                                onClick={() => {}}
+                                onClick={finishExercise}
                                 isOpen={true}
                             />
                         </>
@@ -71,7 +89,7 @@ const Header = () => {
                                 <IconProfile className='header__profile-img' />
                             </button>
 
-                            <MenuBurger
+                            <MenuBurgerBtn
                                 onClick={() => setMenuOpen(!isMenuOpen)}
                                 isOpen={isMenuOpen}
                                 aria-label={

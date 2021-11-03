@@ -1,7 +1,6 @@
 import React from "react"
 import { Route, Redirect } from "react-router"
 import { CSSTransition } from "react-transition-group"
-
 import { EntryPage } from "./pages/EntryPage/EntryPage"
 import { HomePage } from "./pages/HomePage/HomePage"
 import { LoginPage } from "./pages/LoginPage/LoginPage"
