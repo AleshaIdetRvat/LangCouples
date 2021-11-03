@@ -1,11 +1,13 @@
 .header {
     height: 74px;
 }
+
 .header__container {
     height: 100%;
     background-color: var(--sky);
     padding: 16px 18px;
 }
+
 .header__grid {
     height: 100%;
     gap: 28px;
@@ -14,18 +16,17 @@
     align-items: center;
     justify-content: space-between;
 }
+
 .header__logo {
 }
 
 .header__progress-bar {
-    grid-column: span 2;
+    grid-column: 1 / 3;
 }
 
 .header__profile {
     height: 34px;
     width: 34px;
-    // display: flex;
-    // align-items: center;
     border-radius: 50%;
     box-shadow: 0px 0px 0px 0px var(--sky);
     transition: 0.2s linear;
@@ -61,8 +62,9 @@
 }
 
 .progress-bar {
-    width: calc(100% - 28px);
-    justify-self: end;
+    margin-left: 8px;
+    width: 100%;
+    justify-self: start;
     min-width: 100px;
     display: flex;
     align-items: center;

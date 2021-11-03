@@ -4,13 +4,13 @@ import classNames from "classnames"
 import "./MenuBurgerBtn.scss"
 
 const MenuBurgerBtn = ({ isOpen, onClick, ...props }) => {
-    const menuStyles = classNames("menu-burger-btn", {
+    const menuStyles = classNames({
+        "menu-burger-btn": true,
         "--opened": isOpen,
     })
 
     return (
         <button
-            tabIndex='1'
             type='button'
             className={menuStyles}
             onClick={onClick}

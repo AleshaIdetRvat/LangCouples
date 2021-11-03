@@ -66,6 +66,9 @@ const LessonPage = () => {
 
     const history = useHistory()
 
+    const specificExNumber =
+        exampleNumber !== couples.length ? exampleNumber : exampleNumber - 1
+
     const mapToAnswerPieses = ({ text, id }) => (
         <LessonWord onClick={() => dispath(setOptionOfWords(id))} key={id}>
             {text}
@@ -84,21 +87,40 @@ const LessonPage = () => {
     )
 
     const onClickBottomBtn = () => {
+        if (couples.length - 1 === exampleNumber) {
+            dispath(incrementExNumber())
+        }
+
         if (isReviewed) {
+            dispath(incrementExNumber())
+
             if (couples.length === exampleNumber) {
+                console.log("__FINISH")
                 dispath(finishLesson(exercises))
                 history.push("/home")
-            }
-            if (couples.length - 1 === exampleNumber) {
-                dispath(incrementExNumber())
-            } else if (exampleNumber < couples.length - 1) {
-                dispath(incrementExNumber())
+                // finish move
+            } else {
                 dispath(createExample(shuffleArray))
             }
-        } else {
-            dispath(checkCurrentExample())
-        }
+        } else dispath(checkCurrentExample())
     }
+
+    // const onClickBottomBtn = () => {
+    //     if (isReviewed) {
+    //         if (couples.length === exampleNumber) {
+    //             dispath(finishLesson(exercises))
+    //             history.push("/home")
+    //         }
+    //         if (couples.length - 1 === exampleNumber) {
+    //             dispath(incrementExNumber())
+    //         } else if (couples.length - 1 > exampleNumber) {
+    //             dispath(incrementExNumber())
+    //             dispath(createExample(shuffleArray))
+    //         }
+    //     } else {
+    //         dispath(checkCurrentExample())
+    //     }
+    // }
 
     const styles = classNames({
         "lesson-page": true,
@@ -107,7 +129,7 @@ const LessonPage = () => {
     })
 
     const btnInnerText = isReviewed
-        ? couples.length === exampleNumber
+        ? exampleNumber === couples.length
             ? "Finish"
             : "Next"
         : "Review"
@@ -115,13 +137,7 @@ const LessonPage = () => {
     return (
         <>
             <ReviewModalWindow
-                answerText={
-                    couples[
-                        exampleNumber !== couples.length
-                            ? exampleNumber
-                            : exampleNumber - 1
-                    ]?.to
-                }
+                answerText={couples[specificExNumber]?.to}
                 isReviewed={isReviewed}
                 isCorrect={isAnswerCorrect}
             />
@@ -135,13 +151,7 @@ const LessonPage = () => {
                         isTailPositionCenter={true}
                         isStatic={true}
                     >
-                        {
-                            couples[
-                                exampleNumber !== couples.length
-                                    ? exampleNumber
-                                    : exampleNumber - 1
-                            ]?.from
-                        }
+                        {couples[specificExNumber]?.from}
                     </Clue>
 
                     <div className='lesson-page__lists'>

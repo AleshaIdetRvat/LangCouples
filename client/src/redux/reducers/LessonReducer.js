@@ -55,12 +55,16 @@ const LessonReducer = (state = initState, action) => {
         }
 
         case CHECK_ANSWER: {
+            const specificExNumber =
+                state.exampleNumber !== state.couples.length
+                    ? state.exampleNumber
+                    : state.exampleNumber - 1
             return {
                 ...state,
                 isReviewed: true,
                 isAnswerCorrect:
                     state.piecesOfAnswer.map((word) => word.text).join(" ") ===
-                    state.couples[state.exampleNumber].to,
+                    state.couples[specificExNumber].to,
             }
         }
 
@@ -76,6 +80,8 @@ const LessonReducer = (state = initState, action) => {
                 ...state.couples[state.exampleNumber]?.to.split(" "),
                 ...confusingItems,
             ]
+
+            console.log("Create example #", state.exampleNumber)
 
             return {
                 //

@@ -66,8 +66,8 @@ const Header = () => {
                             <div className='header__progress-bar progress-bar'>
                                 <div className='progress-bar__container'>
                                     <div
-                                        ref={progressBarRef}
                                         className='progress-bar__body'
+                                        ref={progressBarRef}
                                     />
                                 </div>
                             </div>

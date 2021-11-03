@@ -34,6 +34,7 @@ const Menu = ({ isMenuOpen, closeMenu }) => {
                     >
                         {navLinks.map(({ name, path }) => (
                             <NavLink
+                                tabIndex={isMenuOpen ? 0 : -1}
                                 className='menu__link'
                                 activeClassName='menu__link--active'
                                 to={path}

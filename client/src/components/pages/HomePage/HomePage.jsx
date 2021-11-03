@@ -14,13 +14,30 @@ const HomePage = (props) => {
     const { from, to } = useSelector((state) => state.PersonalData.langs)
     console.log(from, to)
 
-    const lessonThemes = ["fruits", "weather", "animals", "shop"]
+    const lessonThemes = [
+        "fruits",
+        "weather",
+        "animals",
+        "shop",
+        "cars",
+        "development",
+    ]
 
     const onSubmit = async (theme) => {
         // langFrom, langTo, theme, keyword,
-        console.log({ langFrom: from, langTo: to, keyword: keyWord || null, theme })
+        console.log({
+            langFrom: from,
+            langTo: to,
+            keyword: keyWord || null,
+            theme,
+        })
         dispatch(
-            getCouples({ langFrom: from, langTo: to, keyword: keyWord || null, theme })
+            getCouples({
+                langFrom: from,
+                langTo: to,
+                keyword: keyWord || null,
+                theme,
+            })
         )
         history.push("/lesson")
     }

@@ -1,5 +1,6 @@
 const ADD_NOTICE = "ADD_NOTICE"
 const DELETE_NOTICE = "DELETE_NOTICE"
+const ADD_DELETION_ANIMATION = "ADD_DELETION_ANIMATION"
 
 const ID = () => "_" + Math.random().toString(36).substr(2, 9)
 
@@ -20,6 +21,7 @@ const NoticeReducer = (state = initState, action) => {
                 content: action.content,
                 noticeType: action.noticeType,
                 id: action.id,
+                isDeletion: false,
             }
 
             return {
@@ -31,6 +33,18 @@ const NoticeReducer = (state = initState, action) => {
                 ...state,
                 notifications: state.notifications.filter(
                     (notice) => notice.id !== action.id
+                ),
+            }
+        case ADD_DELETION_ANIMATION:
+            return {
+                ...state,
+                notifications: state.notifications.map((notice) =>
+                    notice.id === action.id
+                        ? {
+                              ...notice,
+                              isDeletion: true,
+                          }
+                        : notice
                 ),
             }
         default:
@@ -45,14 +59,26 @@ const addNotice = (content, noticeType, id) => ({
     id,
 })
 
-export const deleteNotification = (id) => ({
+const removeNotification = (id) => ({
     type: DELETE_NOTICE,
     id,
 })
 
+export const addDeletionAnimation = (id) => ({
+    type: ADD_DELETION_ANIMATION,
+    id,
+})
+
+export const deleteNotification = (id) => (dispatch) => {
+    dispatch(addDeletionAnimation(id))
+    setTimeout(() => {
+        dispatch(removeNotification(id))
+    }, 400)
+}
+
 export const newNotice =
     (content, noticeType = null) =>
-    async (dispatch) => {
+    (dispatch) => {
         const newId = ID()
 
         dispatch(addNotice(content, noticeType, newId))

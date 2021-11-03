@@ -29,6 +29,7 @@
 }
 
 .menu__body {
+    pointer-events: none;
     transition: 0.3s;
 
     transform: translateX(100%);
@@ -38,6 +39,8 @@
     background-color: var(--sky);
 }
 .menu--open .menu__body {
+    pointer-events: visible;
+
     transform: translateX(0%);
 }
 

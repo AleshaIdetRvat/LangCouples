@@ -18,6 +18,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
+    width: 100%;
 }
 
 .notifications__item {
@@ -26,21 +27,56 @@
         margin-top: 10px;
     }
     margin-left: 10px;
-    border-radius: 8px;
-    padding: 10px;
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+
+@keyframes notice-translate {
+    0% {
+        transform: translateX(calc(-100% - 10px)) scale(80%);
+    }
+
+    100% {
+        transform: translateX(0%) scale(100%);
+    }
+}
+
+@keyframes reverse-notice-translate {
+    0% {
+        transform: translateX(0%) scale(100%);
+    }
+
+    100% {
+        transform: translateX(calc(-100% - 10px)) scale(80%);
+    }
 }
 
 .notice {
-    opacity: 0.9;
+    font-family: "Fira Sans", sans-serif;
+
     color: var(--text);
+    font-weight: 500;
     background-color: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    font-size: 1.2rem;
+
+    transition: 0.15s;
+
+    &:hover {
+        opacity: 0.8;
+    }
 
     &.warning {
-        color: var(--error-text);
+        // color: var(--error-text);
         background-color: var(--error);
     }
     &.success {
-        color: var(--green);
+        // color: var(--green);
         background-color: var(--green-light);
+    }
+    animation: notice-translate 0.4s ease forwards;
+
+    &.--deletion {
+        animation: reverse-notice-translate 0.4s ease forwards;
     }
 }
