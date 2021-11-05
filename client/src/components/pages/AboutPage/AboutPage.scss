@@ -1,0 +1,23 @@
+.about {
+}
+
+.about__container {
+    padding: 25px;
+}
+
+.about__title {
+}
+.main-title {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+}
+.about__description {
+    line-height: 1.5;
+}
+
+.about__link.link-git-hub {
+    color: var(--green);
+    text-decoration: underline;
+    text-decoration-thickness: 0.2rem;
+}

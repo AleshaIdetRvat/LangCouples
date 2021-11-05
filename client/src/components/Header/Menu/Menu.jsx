@@ -1,9 +1,13 @@
 import React from "react"
+import { useDispatch } from "react-redux"
 import { NavLink } from "react-router-dom"
 import classNames from "classnames"
+import { logout } from "../../../redux/reducers/UserAuthDataReducer"
 import "./Menu.scss"
 
 const Menu = ({ isMenuOpen, closeMenu }) => {
+    const dispatch = useDispatch()
+
     const navLinks = [
         { path: "/home", name: "Home" },
         { path: "/start", name: "Settings" },
@@ -43,11 +47,17 @@ const Menu = ({ isMenuOpen, closeMenu }) => {
                                 {name}
                             </NavLink>
                         ))}
+                        <button
+                            className='menu__link'
+                            onClick={() => dispatch(logout())}
+                        >
+                            Logout
+                        </button>
                     </nav>
                 </div>
             </div>
         </div>
     )
 }
-/// CONTINUE HERE
+
 export { Menu }

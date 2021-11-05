@@ -64,7 +64,7 @@ const removeNotification = (id) => ({
     id,
 })
 
-export const addDeletionAnimation = (id) => ({
+const addDeletionAnimation = (id) => ({
     type: ADD_DELETION_ANIMATION,
     id,
 })

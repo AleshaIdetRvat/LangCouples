@@ -51,4 +51,22 @@ router.put("/exercises", authMiddleWare, async (req, res) => {
     }
 })
 
+router.get("/", authMiddleWare, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.userId)
+
+        if (!user) return res.status(400).json({ message: "User not found" })
+
+        res.status(200).json({
+            exercises: user.exercises,
+            langs: user.langs,
+            email: user.email,
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: "Something error , ERROR: " + error.message,
+        })
+    }
+})
+
 module.exports = router

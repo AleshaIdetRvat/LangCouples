@@ -12,7 +12,6 @@ const HomePage = (props) => {
 
     const dispatch = useDispatch()
     const { from, to } = useSelector((state) => state.PersonalData.langs)
-    console.log(from, to)
 
     const lessonThemes = [
         "fruits",
@@ -25,12 +24,7 @@ const HomePage = (props) => {
 
     const onSubmit = async (theme) => {
         // langFrom, langTo, theme, keyword,
-        console.log({
-            langFrom: from,
-            langTo: to,
-            keyword: keyWord || null,
-            theme,
-        })
+
         dispatch(
             getCouples({
                 langFrom: from,

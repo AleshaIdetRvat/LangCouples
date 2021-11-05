@@ -78,7 +78,9 @@ export const register = (email, password) => async (dispath) => {
 // thunk creator
 export const logout = () => (dispath) => {
     dispath(setAuthData(null, null))
+
     dispath(setIsAuth(false))
+
     localStorage.setItem(
         userDataStorage,
         JSON.stringify({ userId: null, token: null })

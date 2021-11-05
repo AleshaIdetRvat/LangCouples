@@ -22,6 +22,15 @@ export const mainAPI = {
             throw new Error(error.message)
         }
     },
+    getUserData: async () => {
+        try {
+            const { data } = await axiosInstance.get(`user/`)
+
+            return data
+        } catch (error) {
+            throw new Error(error.response.data.message)
+        }
+    },
     putLangs: async (langs) => {
         try {
             await axiosInstance.put(`user/langs`, langs)
@@ -37,6 +46,7 @@ export const mainAPI = {
         }
     },
 }
+window.getUserData = mainAPI.getUserData
 
 export const authAPI = {
     login: async (email, password) => {

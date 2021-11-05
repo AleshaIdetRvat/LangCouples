@@ -1,0 +1,144 @@
+.profile {
+}
+.profile__container {
+    padding: 25px;
+}
+.profile__header {
+    padding: 25px;
+    border-radius: 15px;
+    background: #d5e2f3a1;
+    margin-bottom: 10px;
+}
+.profile__title {
+    // font-weight: bold;
+}
+.profile__email {
+    color: var(--green);
+}
+.profile__statistic {
+    padding: 25px;
+    border-radius: 15px;
+    background: #d5e2f3a1;
+}
+///
+///
+.exercises-statistic {
+}
+.exercises-statistic__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 65px;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding: 0px;
+}
+.exercises-statistic__title {
+    font-weight: bold;
+    font-size: 1.8rem;
+    text-align: center;
+}
+.exercises-statistic__diagram {
+}
+///
+///
+.diagram {
+}
+.diagram__body {
+    position: relative;
+    width: 30vmin;
+    height: 30vmin;
+    max-width: 250px;
+    max-height: 250px;
+    animation: rotate-circle 6s linear infinite;
+    animation-play-state: running;
+    &:hover {
+        animation-play-state: paused;
+        .diagram__big-circle,
+        .diagram__small-circle {
+            animation-play-state: paused;
+        }
+    }
+}
+.diagram__big-circle,
+.diagram__small-circle {
+    width: 100%;
+    height: 100%;
+
+    animation: rotate-circle 6s linear reverse infinite;
+
+    background-color: var(--grey);
+    border-radius: 50%;
+
+    background: radial-gradient(
+        farthest-side ellipse at top left,
+        rgb(231, 231, 231),
+        #aaaaaa
+    );
+    box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.3),
+        -5px -10px 20px rgba(255, 255, 255, 0.5);
+}
+.diagram__small-circle {
+    width: 70%;
+    height: 70%;
+
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    background: radial-gradient(
+        farthest-side ellipse at top left,
+        rgb(201, 230, 188),
+        var(--green)
+    );
+    box-shadow: 5px 10px 20px rgba(15, 59, 4, 0.3),
+        -5px -10px 20px rgba(179, 230, 178, 0.5);
+}
+///
+///
+.exercises-statistic__description {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    align-self: flex-start;
+}
+.exercises-statistic__description-item {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+///
+///
+.exercises-desc-item {
+}
+
+.exercises-desc-item__circle {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: #c2c2c2;
+    box-shadow: 0 1px 1px rgba(0px, 0px, 0px, 0.025),
+        0 2px 2px rgba(0px, 0px, 0px, 0.025),
+        0 4px 4px rgba(0px, 0px, 0px, 0.025),
+        0 8px 8px rgba(0px, 0px, 0px, 0.025),
+        0 16px 16px rgba(0px, 0px, 0px, 0.025);
+}
+.correctly-exercise-desc {
+    color: var(--green);
+}
+.correctly-exercise-desc .exercises-desc-item__circle {
+    background-color: var(--green-hover);
+}
+
+@keyframes rotate-circle {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

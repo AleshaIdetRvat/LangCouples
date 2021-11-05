@@ -13,19 +13,21 @@
     &:hover {
         background-color: var(--green-hover);
         box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0),
-            0px 0px 0px 0px var(--green-hover) inset, 0px 2px 6px rgba(0, 0, 0, 0.25);
+            0px 0px 0px 0px var(--green-hover) inset,
+            0px 2px 6px rgba(0, 0, 0, 0.25);
     }
     &:active {
         background-color: var(--green);
         box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25),
-            0px 0px 0px 3px var(--green-hover) inset, 0px 2px 6px rgba(0, 0, 0, 0);
+            0px 0px 0px 3px var(--green-hover) inset,
+            0px 2px 6px rgba(0, 0, 0, 0);
     }
 
     &.btn-disabled {
         background-color: var(--white);
         color: var(--grey);
-        box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0), 0px 0px 0px 3px var(--grey) inset,
-            0px 2px 6px rgba(0, 0, 0, 0);
+        box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0),
+            0px 0px 0px 3px var(--grey) inset, 0px 2px 6px rgba(0, 0, 0, 0);
     }
 }
 

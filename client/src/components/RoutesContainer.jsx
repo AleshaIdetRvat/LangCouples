@@ -7,11 +7,15 @@ import { LoginPage } from "./pages/LoginPage/LoginPage"
 import { RegisterPageContainer } from "./pages/RegisterPage/RegisterPage"
 import StartPage from "./pages/StartPage/StartPage"
 import { LessonPage } from "./pages/LessonPage/LessonPage"
+import { AboutPage } from "./pages/AboutPage/AboutPage"
+import { ProfilePage } from "./pages/ProfilePage/ProfilePage"
 
 const routesIfUserAuth = [
     { path: "/home", name: "Home", Component: HomePage },
     { path: "/start", name: "Start", Component: StartPage },
     { path: "/lesson", name: "Lesson", Component: LessonPage },
+    { path: "/about", name: "About", Component: AboutPage },
+    { path: "/profile", name: "Profile", Component: ProfilePage },
 ]
 
 const routesIfUserNotAuth = [

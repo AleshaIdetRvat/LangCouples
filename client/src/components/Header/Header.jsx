@@ -1,5 +1,6 @@
 import React from "react"
 import { useLocation, useHistory } from "react-router"
+import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import classNames from "classnames"
 import { IconProfile } from "../../assets/image/IconProfile"
@@ -85,9 +86,13 @@ const Header = () => {
                                     Couples
                                 </h2>
                             </div>
-                            <button className='header__profile'>
+                            <Link
+                                className='header__profile'
+                                to='/profile'
+                                aria-label='profile'
+                            >
                                 <IconProfile className='header__profile-img' />
-                            </button>
+                            </Link>
 
                             <MenuBurgerBtn
                                 onClick={() => setMenuOpen(!isMenuOpen)}
