@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { useHistory } from "react-router-dom"
-import { connect } from "react-redux"
+import { connect, useSelector } from "react-redux"
 import { Formik } from "formik"
 import * as yup from "yup"
 
@@ -10,6 +10,7 @@ import { GreenBtn } from "../../common/GreenBtn/GreenBtn"
 import { MainInput } from "../../common/MainInput/MainInput"
 import { newNotice } from "../../../redux/reducers/NoticeReducer"
 import "./RegisterPage.scss"
+import { Loader } from "../../common/Loader/Loader"
 
 const RegisterForm = ({ className, onSubmitReg }) => {
     //
@@ -55,49 +56,52 @@ const RegisterForm = ({ className, onSubmitReg }) => {
                 dirty,
             }) => {
                 return (
-                    <form onSubmit={handleSubmit} className={`${className} login-form`}>
-                        <div className="register-form__input-login">
+                    <form
+                        onSubmit={handleSubmit}
+                        className={`${className} login-form`}
+                    >
+                        <div className='register-form__input-login'>
                             <MainInput
                                 value={values.login}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 error={errors.login}
                                 touched={touched.login}
-                                name="login"
-                                type="text"
-                                placeholder="email"
+                                name='login'
+                                type='text'
+                                placeholder='email'
                             />
                         </div>
-                        <div className="register-form__input-password">
+                        <div className='register-form__input-password'>
                             <MainInput
                                 value={values.password}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 error={errors.password}
                                 touched={touched.password}
-                                name="password"
-                                type="password"
-                                placeholder="password"
+                                name='password'
+                                type='password'
+                                placeholder='password'
                             />
                         </div>
 
-                        <div className="register-form__input-conf-password">
+                        <div className='register-form__input-conf-password'>
                             <MainInput
                                 value={values.confirmPassword}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 error={errors.confirmPassword}
                                 touched={touched.confirmPassword}
-                                name="confirmPassword"
-                                type="password"
-                                placeholder="confirm password"
+                                name='confirmPassword'
+                                type='password'
+                                placeholder='confirm password'
                             />
                         </div>
 
                         <GreenBtn
-                            className="register-form__submit"
+                            className='register-form__submit'
                             disabled={!isValid || !dirty}
-                            type="submit"
+                            type='submit'
                         >
                             Register
                         </GreenBtn>
@@ -108,7 +112,7 @@ const RegisterForm = ({ className, onSubmitReg }) => {
     )
 }
 
-const RegisterPage = ({ authError, register, newNotice }) => {
+const RegisterPage = ({ isFetching, authError, register, newNotice }) => {
     const history = useHistory()
 
     const onSubmitReg = async (email, password) => {
@@ -124,11 +128,17 @@ const RegisterPage = ({ authError, register, newNotice }) => {
     })
 
     return (
-        <div className="register-page">
-            <div className="register-page__container sky-container">
-                <RegisterForm onSubmitReg={onSubmitReg} className="register-page__form" />
+        <>
+            <Loader isLoading={isFetching} />
+            <div className='register-page'>
+                <div className='register-page__container sky-container'>
+                    <RegisterForm
+                        onSubmitReg={onSubmitReg}
+                        className='register-page__form'
+                    />
+                </div>
             </div>
-        </div>
+        </>
     )
 }
 
@@ -143,6 +153,7 @@ RegisterPage.propTypes = {
 
 const mapStateToProps = (state) => ({
     authError: state.UserAuthData.errorMsg,
+    isFetching: state.UserAuthData.isFetching,
 })
 
 const RegisterPageContainer = connect(mapStateToProps, { register, newNotice })(

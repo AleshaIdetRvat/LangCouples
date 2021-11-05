@@ -6,25 +6,15 @@ import { GreenBtn } from "../../common/GreenBtn/GreenBtn"
 import { MainInput } from "../../common/MainInput/MainInput"
 import "./HomePage.scss"
 
-const HomePage = (props) => {
+const HomePage = ({ translate, ...props }) => {
     const history = useHistory()
     const [keyWord, setKeyWord] = useState(null)
 
-    const dispatch = useDispatch()
     const { from, to } = useSelector((state) => state.PersonalData.langs)
-
-    const lessonThemes = [
-        "fruits",
-        "weather",
-        "animals",
-        "shop",
-        "cars",
-        "development",
-    ]
+    const dispatch = useDispatch()
 
     const onSubmit = async (theme) => {
         // langFrom, langTo, theme, keyword,
-
         dispatch(
             getCouples({
                 langFrom: from,
@@ -40,17 +30,21 @@ const HomePage = (props) => {
         <div className='home' {...props}>
             <div className='home__column'>
                 <header className='home__header'>
-                    <h1 className='home__title'>Lesson themes for today</h1>
+                    <h1 className='home__title'>
+                        {translate("home-page.Lesson themes for today")}
+                    </h1>
                 </header>
 
                 <div className='home__themes today-themes'>
                     <div className='today-themes__container'>
                         <ul className='today-themes__list'>
-                            {lessonThemes.map((theme) => (
+                            {translate("home-page.lessonThemes", {
+                                returnObjects: true,
+                            }).map((theme, i) => (
                                 <GreenBtn
                                     onClick={() => onSubmit(theme)}
                                     className='today-themes__item'
-                                    key={theme}
+                                    key={theme + i}
                                 >
                                     {theme}
                                 </GreenBtn>
@@ -60,9 +54,9 @@ const HomePage = (props) => {
                 </div>
 
                 <span className='home__select-your-word'>
-                    or
+                    {translate("home-page.or")}
                     <br />
-                    select the word you want to train
+                    {translate("home-page.select the word you want to train")}
                 </span>
 
                 <form
@@ -74,11 +68,12 @@ const HomePage = (props) => {
                 >
                     <MainInput
                         onChange={(e) => setKeyWord(e.target.value)}
-                        placeholder='Your word'
+                        placeholder={translate("home-page.Your word")}
                         className='home__input'
                     />
+
                     <GreenBtn className='home__sumbit-btn' type='submit'>
-                        Learn
+                        {translate("home-page.Learn")}
                     </GreenBtn>
                 </form>
             </div>

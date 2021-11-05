@@ -1,5 +1,5 @@
 import React from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { NavLink } from "react-router-dom"
 import classNames from "classnames"
 import { logout } from "../../../redux/reducers/UserAuthDataReducer"
@@ -7,10 +7,15 @@ import "./Menu.scss"
 
 const Menu = ({ isMenuOpen, closeMenu }) => {
     const dispatch = useDispatch()
+    const isAuth = useSelector((state) => state.UserAuthData.isAuth)
 
     const navLinks = [
-        { path: "/home", name: "Home" },
-        { path: "/start", name: "Settings" },
+        ...(isAuth
+            ? [
+                  { path: "/home", name: "Home" },
+                  { path: "/start", name: "Settings" },
+              ]
+            : []),
         { path: "/about", name: "About Us" },
     ]
 
@@ -47,12 +52,15 @@ const Menu = ({ isMenuOpen, closeMenu }) => {
                                 {name}
                             </NavLink>
                         ))}
-                        <button
-                            className='menu__link'
-                            onClick={() => dispatch(logout())}
-                        >
-                            Logout
-                        </button>
+                        {isAuth && (
+                            <button
+                                className='menu__link'
+                                tabIndex={isMenuOpen ? 0 : -1}
+                                onClick={() => dispatch(logout())}
+                            >
+                                Logout
+                            </button>
+                        )}
                     </nav>
                 </div>
             </div>

@@ -10,11 +10,12 @@ import { LangSelector } from "../../common/LangSelector/LangSelector"
 import { GreenBtn } from "../../common/GreenBtn/GreenBtn"
 import { useHistory } from "react-router-dom"
 import { Clue } from "../../common/Clue/Clue"
+import { useTranslation } from "react-i18next"
 import "./StartPage.scss"
 
 const StartPage = (props) => {
-    const { langs, setLangFrom, setLangTo, saveLangs } = props
-
+    const { translate, langs, setLangFrom, setLangTo, saveLangs } = props
+    const { i18n } = useTranslation()
     const [isFirstLangTouched, setFirstLangTouched] = React.useState(false)
 
     const history = useHistory()
@@ -24,12 +25,14 @@ const StartPage = (props) => {
         history.push("/home")
     }
 
+    React.useEffect(() => i18n.changeLanguage(langs.from), [langs.from])
+
     return (
         <div className='start-page'>
             <div className='start-page__container'>
                 <div className='start-page__column'>
                     <h4 className='start-page__title'>
-                        Choose your native language
+                        {translate("start-page.Choose your native language")}
                     </h4>
 
                     <div
@@ -40,7 +43,7 @@ const StartPage = (props) => {
                             className='first-lang__clue'
                             isClose={isFirstLangTouched}
                         >
-                            click me!
+                            {translate("start-page.click me")}!
                         </Clue>
                         <LangSelector
                             selectLang={setLangFrom}
@@ -49,7 +52,9 @@ const StartPage = (props) => {
                     </div>
 
                     <h4 className='start-page__title'>
-                        Language that you want to learn
+                        {translate(
+                            "start-page.Language that you want to learn"
+                        )}
                     </h4>
 
                     <div className='start-page__lang'>
@@ -64,7 +69,7 @@ const StartPage = (props) => {
                         className='start-page__btn'
                         onClick={onClick}
                     >
-                        Make couple
+                        {translate("start-page.Let's go")}
                     </GreenBtn>
                 </div>
             </div>

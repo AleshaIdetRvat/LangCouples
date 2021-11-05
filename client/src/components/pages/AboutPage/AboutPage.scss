@@ -13,6 +13,10 @@
     margin-bottom: 20px;
 }
 .about__description {
+    text-align: justify;
+    padding: 25px;
+    border-radius: 15px;
+    background: var(--light-sky);
     line-height: 1.5;
 }
 

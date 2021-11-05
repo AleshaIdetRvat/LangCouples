@@ -3,8 +3,8 @@ import PropTypes from "prop-types"
 import classNames from "classnames"
 import "./MenuBurgerBtn.scss"
 
-const MenuBurgerBtn = ({ isOpen, onClick, ...props }) => {
-    const menuStyles = classNames({
+const MenuBurgerBtn = ({ isOpen, onClick, className, ...props }) => {
+    const menuStyles = classNames(className, {
         "menu-burger-btn": true,
         "--opened": isOpen,
     })

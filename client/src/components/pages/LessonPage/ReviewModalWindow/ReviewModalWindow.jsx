@@ -3,7 +3,13 @@ import React from "react"
 import { CSSTransition } from "react-transition-group"
 import "./ReviewModalWindow.scss"
 
-const ReviewModalWindow = ({ isCorrect, isReviewed, answerText, ...props }) => {
+const ReviewModalWindow = ({
+    title,
+    isCorrect,
+    isReviewed,
+    answerText,
+    ...props
+}) => {
     const styles = classNames({
         "review-modal": true,
         "review-modal--correct": isCorrect,
@@ -19,7 +25,7 @@ const ReviewModalWindow = ({ isCorrect, isReviewed, answerText, ...props }) => {
         >
             <div className={styles} {...props}>
                 <div className='review-modal__body'>
-                    <h2 className='review-modal__title'>Answer:</h2>
+                    <h2 className='review-modal__title'>{title}:</h2>
                     <p className='review-modal__answer'>{answerText}</p>
                 </div>
             </div>

@@ -1,0 +1,40 @@
+{
+    "start-page": {
+        "Choose your native language": "Выберите свой родной язык",
+        "click me": "нажми на меня",
+        "Language that you want to learn": "Язык, который вы хотите выучить",
+        "Let's go": "Вперёд"
+    },
+    "home-page": {
+        "lessonThemes": [
+            "фрукты",
+            "погода",
+            "животные",
+            "магазин",
+            "машины",
+            "разработка"
+        ],
+        "Lesson themes for today": "Темы уроков на сегодня",
+        "or": "или",
+        "select the word you want to train": "выберите слово, которое хотите потренировать",
+        "Your word": "Ваше слово",
+        "Learn": "Учиться"
+    },
+    "lesson-page": {
+        "Finish": "Закончить",
+        "Next": "Дальше",
+        "Review": "Проверить",
+        "reviewModalTitle": "Правильный ответ"
+    },
+    "about-page": {
+        "title": "О нас",
+        "description": " простое приложение для изучения иностранных языков. Вы можете посмотреть код этого проекта на "
+    },
+
+    "profile": {
+        "Your login": "Ваш логин",
+        "statistic-title": "Статистика по результатам решенных упражнений ",
+        "failed attempts": "неудачные попытки",
+        "correctly solved": "правильно решенных"
+    }
+}

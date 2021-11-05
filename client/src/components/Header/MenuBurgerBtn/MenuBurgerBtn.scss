@@ -1,6 +1,7 @@
 @import "../../../assets/style/colors.scss";
 
 .menu-burger-btn {
+    cursor: pointer;
     width: 35px;
 
     &.--opened {

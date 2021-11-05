@@ -33,21 +33,21 @@
 
 @keyframes notice-translate {
     0% {
-        transform: translateX(calc(-100% - 10px)) scale(80%);
+        transform: scale(0%);
     }
 
     100% {
-        transform: translateX(0%) scale(100%);
+        transform: scale(100%);
     }
 }
 
 @keyframes reverse-notice-translate {
     0% {
-        transform: translateX(0%) scale(100%);
+        transform: scale(100%);
     }
 
     100% {
-        transform: translateX(calc(-100% - 10px)) scale(80%);
+        transform: scale(0%);
     }
 }
 
@@ -79,7 +79,7 @@
         background-color: var(--green-light);
     }
     animation: notice-translate 0.4s ease forwards;
-
+    transform-origin: left;
     &.--deletion {
         animation: reverse-notice-translate 0.4s ease forwards;
     }

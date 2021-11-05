@@ -4,7 +4,7 @@ const axiosInstance = axios.create({
     baseURL: "http://localhost:5000/api/",
 })
 
-export const setAuthToken = (token) =>
+export const setAuthTokenForAxiosInstance = (token) =>
     axiosInstance.interceptors.request.use((config) => {
         config.headers.Authorization = token ? `Bearer ${token}` : ""
         return config
@@ -46,7 +46,6 @@ export const mainAPI = {
         }
     },
 }
-window.getUserData = mainAPI.getUserData
 
 export const authAPI = {
     login: async (email, password) => {

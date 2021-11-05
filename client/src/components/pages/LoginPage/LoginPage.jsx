@@ -7,6 +7,7 @@ import { GreenBtn } from "../../common/GreenBtn/GreenBtn"
 import { MainInput } from "../../common/MainInput/MainInput"
 import { newNotice } from "../../../redux/reducers/NoticeReducer"
 import "./LoginPage.scss"
+import { Loader } from "../../common/Loader/Loader"
 
 const LoginForm = ({ onSubmitLogin, className }) => {
     //
@@ -47,7 +48,10 @@ const LoginForm = ({ onSubmitLogin, className }) => {
                 dirty,
             }) => {
                 return (
-                    <form onSubmit={handleSubmit} className={`${className} login-form`}>
+                    <form
+                        onSubmit={handleSubmit}
+                        className={`${className} login-form`}
+                    >
                         <div className='login-form__input-login'>
                             <MainInput
                                 value={values.login}
@@ -88,7 +92,7 @@ const LoginForm = ({ onSubmitLogin, className }) => {
 }
 
 const LoginPage = () => {
-    const errorMsg = useSelector((state) => state.UserAuthData.errorMsg)
+    const { errorMsg, isFetching } = useSelector((state) => state.UserAuthData)
     const dispatch = useDispatch()
 
     const onSubmitLogin = (email, password) => {
@@ -100,11 +104,18 @@ const LoginPage = () => {
     }, [errorMsg.text, dispatch])
 
     return (
-        <div className='login-page'>
-            <div className='login-page__container sky-container'>
-                <LoginForm onSubmitLogin={onSubmitLogin} className='login-page__form' />
+        <>
+            <Loader isLoading={isFetching} />
+
+            <div className='login-page'>
+                <div className='login-page__container sky-container'>
+                    <LoginForm
+                        onSubmitLogin={onSubmitLogin}
+                        className='login-page__form'
+                    />
+                </div>
             </div>
-        </div>
+        </>
     )
 }
 

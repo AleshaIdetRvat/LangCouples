@@ -5,7 +5,7 @@ const SET_USER_DATA = "SET_USER_DATA"
 
 const initState = {
     exercises: { completed: 0, solved: 0 },
-    langs: { from: "en", to: "ru" },
+    langs: { from: "", to: "" },
     email: "",
 }
 

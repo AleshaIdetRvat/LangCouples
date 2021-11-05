@@ -1,14 +1,17 @@
 import React from "react"
 import "./AboutPage.scss"
 
-const AboutPage = () => {
+const AboutPage = ({ translate }) => {
     return (
         <div className='about'>
             <div className='about__container'>
-                <h1 className='about__title main-title'>About Us</h1>
+                <h1 className='about__title main-title'>
+                    {translate("about-page.title")}
+                </h1>
                 <p className='about__description'>
-                    <strong>"Lang Couples"</strong> is a simple app for learn
-                    foreign languages. You can check this project on{" "}
+                    <strong>«LangCouples»</strong>
+                    {" - "}
+                    {translate("about-page.description")}
                     <a
                         className='about__link link-git-hub'
                         href='https://github.com/AleshaIdetRvat/LangCouples'

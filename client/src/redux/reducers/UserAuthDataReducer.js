@@ -1,9 +1,10 @@
-import { authAPI, setAuthToken } from "../../api/api"
+import { authAPI, setAuthTokenForAxiosInstance } from "../../api/api"
 import { setLangFrom, setLangTo } from "./UserPersonalDataReducer"
 
 const LOGIN = "userauth/LOGIN"
 const SET_ERROR_MSG = "userauth/SET_ERROR_MSG"
 const SET_IS_AUTH = "userauth/SET_IS_AUTH"
+const SET_IS_FETCHING = "userauth/SET_IS_FETCHING"
 
 const userDataStorage = "userData"
 
@@ -14,10 +15,17 @@ const initState = {
     userId: null,
     isAuth: false,
     errorMsg: { text: null, id: null },
+    isFetching: false,
 }
 
 const UserAuthDataReducer = (state = initState, action) => {
     switch (action.type) {
+        case SET_IS_FETCHING: {
+            return {
+                ...state,
+                isFetching: action.payload,
+            }
+        }
         case LOGIN:
             return {
                 ...state,
@@ -39,6 +47,12 @@ const UserAuthDataReducer = (state = initState, action) => {
     }
 }
 // action creator
+const setIsFetching = (payload) => ({
+    type: SET_IS_FETCHING,
+    payload,
+})
+
+// action creator
 const setIsAuth = (isAuth) => ({
     type: SET_IS_AUTH,
     isAuth,
@@ -59,6 +73,7 @@ const setAuthData = (jwtToken, id) => ({
 
 // thunk creator
 export const register = (email, password) => async (dispath) => {
+    dispath(setIsFetching(true))
     try {
         const lowerCaseEmail = email.toLowerCase()
 
@@ -69,8 +84,12 @@ export const register = (email, password) => async (dispath) => {
         console.log("reg result", registrationResult)
 
         await dispath(login(lowerCaseEmail, password))
+
+        dispath(setIsFetching(false))
     } catch (error) {
         dispath(setErrorMsg(error.message))
+
+        dispath(setIsFetching(false))
         throw new Error(error.message)
     }
 }
@@ -89,6 +108,7 @@ export const logout = () => (dispath) => {
 
 // thunk creator
 export const login = (email, password) => async (dispath) => {
+    dispath(setIsFetching(true))
     try {
         const lowerCaseEmail = email.toLowerCase()
 
@@ -97,11 +117,11 @@ export const login = (email, password) => async (dispath) => {
         const { token, userId, langs } = authData
 
         if (langs !== null) {
-            setLangFrom(langs.from)
-            setLangTo(langs.to)
+            dispath(setLangFrom(langs.from))
+            dispath(setLangTo(langs.to))
         }
 
-        setAuthToken(token)
+        setAuthTokenForAxiosInstance(token)
 
         dispath(setAuthData(token, userId))
 
@@ -114,6 +134,8 @@ export const login = (email, password) => async (dispath) => {
     } catch (error) {
         dispath(setErrorMsg(error.message))
     }
+
+    dispath(setIsFetching(false))
 }
 
 // thunk creator
@@ -122,13 +144,12 @@ export const initLogin = () => (dispath) => {
 
     if (authInitData && authInitData.token) {
         dispath(setAuthData(authInitData.token, authInitData.token))
-        console.log("init login")
 
-        setAuthToken(authInitData.token)
+        setAuthTokenForAxiosInstance(authInitData.token)
 
         if (authInitData.langs) {
-            setLangFrom(authInitData.langs.from)
-            setLangTo(authInitData.langs.to)
+            dispath(setLangFrom(authInitData.langs.from))
+            dispath(setLangTo(authInitData.langs.to))
         }
         dispath(setIsAuth(true))
     }

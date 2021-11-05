@@ -1,0 +1,39 @@
+{
+    "start-page": {
+        "Choose your native language": "Choose your native language",
+        "click me": "click me",
+        "Language that you want to learn": "Language that you want to learn",
+        "Let's go": "Let's go"
+    },
+    "home-page": {
+        "lessonThemes": [
+            "fruits",
+            "weather",
+            "animals",
+            "shop",
+            "cars",
+            "development"
+        ],
+        "Lesson themes for today": "Lesson themes for today",
+        "or": "or",
+        "select the word you want to train": "select the word you want to train",
+        "Your word": "Your word",
+        "Learn": "Learn"
+    },
+    "lesson-page": {
+        "Finish": "Finish",
+        "Next": "Next",
+        "Review": "Review",
+        "reviewModalTitle": "Answer"
+    },
+    "about-page": {
+        "title": "About Us",
+        "description": " is a simple language learning app. You can see the code for this project on "
+    },
+    "profile": {
+        "Your login": "Your login",
+        "statistic-title": "Statistics on the results of solved exercises",
+        "failed attempts": "failed attempts",
+        "correctly solved": "correctly solved"
+    }
+}

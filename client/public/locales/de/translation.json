@@ -1,0 +1,39 @@
+{
+    "start-page": {
+        "Choose your native language": "Wählen Sie Ihre Muttersprache",
+        "click me": "Klick mich",
+        "Language that you want to learn": "Language that you want to learn",
+        "Let's go": "Let's go"
+    },
+    "home-page": {
+        "lessonThemes": [
+            "Früchte",
+            "Wetter",
+            "Tiere",
+            "Shop",
+            "Fahrzeuge",
+            "Entwicklung"
+        ],
+        "Lesson themes for today": "Lektion Themen für heute",
+        "or": "oder",
+        "select the word you want to train": "Wählen Sie das Wort, das Sie trainieren möchten",
+        "Your word": "Dein Wort",
+        "Learn": "Lernen"
+    },
+    "lesson-page": {
+        "Finish": "Finish",
+        "Next": "Nächst",
+        "Review": "Überprüfung",
+        "reviewModalTitle": "Antwort"
+    },
+    "about-page": {
+        "title": "Über uns",
+        "description": " es ist eine einfache Sprachlern-APP. Sie können den Code für dieses Projekt auf sehen "
+    },
+    "profile": {
+        "Your login": "Ihr Login",
+        "statistic-title": "Statistiken über die Ergebnisse der gelösten Übungen",
+        "failed attempts": "failed attempts",
+        "correctly solved": "correctly solved"
+    }
+}

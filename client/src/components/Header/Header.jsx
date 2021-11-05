@@ -10,12 +10,12 @@ import { finishLesson } from "../../redux/reducers/LessonReducer"
 import { Menu } from "./Menu/Menu"
 import "./Header.scss"
 
-const Header = () => {
+const Header = ({ isAuth }) => {
     const [allCouplesLength, exampleNumber, exercises] = useSelector(
-        ({ Lesson }) => [
-            Lesson.couples.length,
-            Lesson.exampleNumber,
-            Lesson.exercises,
+        (state) => [
+            state.Lesson.couples.length,
+            state.Lesson.exampleNumber,
+            state.Lesson.exercises,
         ]
     )
 
@@ -86,15 +86,18 @@ const Header = () => {
                                     Couples
                                 </h2>
                             </div>
-                            <Link
-                                className='header__profile'
-                                to='/profile'
-                                aria-label='profile'
-                            >
-                                <IconProfile className='header__profile-img' />
-                            </Link>
+                            {isAuth && (
+                                <Link
+                                    className='header__profile'
+                                    to='/profile'
+                                    aria-label='profile'
+                                >
+                                    <IconProfile className='header__profile-img' />
+                                </Link>
+                            )}
 
                             <MenuBurgerBtn
+                                className='header__menu-burger'
                                 onClick={() => setMenuOpen(!isMenuOpen)}
                                 isOpen={isMenuOpen}
                                 aria-label={

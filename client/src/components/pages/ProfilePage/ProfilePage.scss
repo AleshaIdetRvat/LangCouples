@@ -1,43 +1,56 @@
 .profile {
 }
 .profile__container {
-    padding: 25px;
+    padding: 15px;
 }
 .profile__header {
-    padding: 25px;
+    box-shadow: var(--pretty-shadow);
+
+    padding: 15px;
     border-radius: 15px;
-    background: #d5e2f3a1;
-    margin-bottom: 10px;
+    background: var(--light-sky);
+    margin-bottom: 15px;
+
+    text-align: center;
 }
 .profile__title {
-    // font-weight: bold;
 }
 .profile__email {
-    color: var(--green);
+    color: var(--blue);
 }
 .profile__statistic {
     padding: 25px;
     border-radius: 15px;
-    background: #d5e2f3a1;
+    background: var(--light-sky);
 }
 ///
 ///
 .exercises-statistic {
+    box-shadow: var(--pretty-shadow);
 }
 .exercises-statistic__container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 65px;
+    gap: 45px;
     margin-block-start: 0em;
     margin-block-end: 0em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     padding: 0px;
 }
+.exercises-statistic__separator {
+    width: 100%;
+    height: 5px;
+    border-radius: 10px;
+    background-color: var(--sky);
+    outline: none;
+    border: none;
+    // box-shadow: var(--pretty-inset-shadow);
+}
 .exercises-statistic__title {
-    font-weight: bold;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
+    line-height: 1.6rem;
     text-align: center;
 }
 .exercises-statistic__diagram {
@@ -52,7 +65,7 @@
     height: 30vmin;
     max-width: 250px;
     max-height: 250px;
-    animation: rotate-circle 6s linear infinite;
+    animation: rotate-circle 10s linear infinite;
     animation-play-state: running;
     &:hover {
         animation-play-state: paused;
@@ -64,13 +77,25 @@
 }
 .diagram__big-circle,
 .diagram__small-circle {
+    color: var(--white);
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     width: 100%;
     height: 100%;
 
-    animation: rotate-circle 6s linear reverse infinite;
+    min-width: 50px;
+    min-height: 50px;
+    border-radius: 50%;
+
+    //
+
+    //
+    animation: rotate-circle 10s linear reverse infinite;
 
     background-color: var(--grey);
-    border-radius: 50%;
 
     background: radial-gradient(
         farthest-side ellipse at top left,
@@ -81,8 +106,8 @@
         -5px -10px 20px rgba(255, 255, 255, 0.5);
 }
 .diagram__small-circle {
-    width: 70%;
-    height: 70%;
+    opacity: 0.9;
+    color: var(--white);
 
     position: absolute;
     bottom: 0;
@@ -100,6 +125,7 @@
 ///
 ///
 .exercises-statistic__description {
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -108,24 +134,21 @@
 }
 .exercises-statistic__description-item {
     display: flex;
-    gap: 15px;
+    gap: 10px;
     align-items: center;
 }
 ///
 ///
 .exercises-desc-item {
+    font-size: 1.3rem;
 }
 
 .exercises-desc-item__circle {
-    width: 2rem;
-    height: 2rem;
+    width: 1.5rem;
+    height: 1.5rem;
     border-radius: 50%;
     background-color: #c2c2c2;
-    box-shadow: 0 1px 1px rgba(0px, 0px, 0px, 0.025),
-        0 2px 2px rgba(0px, 0px, 0px, 0.025),
-        0 4px 4px rgba(0px, 0px, 0px, 0.025),
-        0 8px 8px rgba(0px, 0px, 0px, 0.025),
-        0 16px 16px rgba(0px, 0px, 0px, 0.025);
+    box-shadow: var(--pretty-shadow);
 }
 .correctly-exercise-desc {
     color: var(--green);

@@ -50,7 +50,7 @@ const LessonWord = ({ onClick, isClose = false, ...props }) => {
     )
 }
 
-const LessonPage = () => {
+const LessonPage = ({ translate }) => {
     const {
         couples,
         isFetching,
@@ -95,32 +95,13 @@ const LessonPage = () => {
             dispath(incrementExNumber())
 
             if (couples.length === exampleNumber) {
-                console.log("__FINISH")
                 dispath(finishLesson(exercises))
                 history.push("/home")
-                // finish move
             } else {
                 dispath(createExample(shuffleArray))
             }
         } else dispath(checkCurrentExample())
     }
-
-    // const onClickBottomBtn = () => {
-    //     if (isReviewed) {
-    //         if (couples.length === exampleNumber) {
-    //             dispath(finishLesson(exercises))
-    //             history.push("/home")
-    //         }
-    //         if (couples.length - 1 === exampleNumber) {
-    //             dispath(incrementExNumber())
-    //         } else if (couples.length - 1 > exampleNumber) {
-    //             dispath(incrementExNumber())
-    //             dispath(createExample(shuffleArray))
-    //         }
-    //     } else {
-    //         dispath(checkCurrentExample())
-    //     }
-    // }
 
     const styles = classNames({
         "lesson-page": true,
@@ -130,13 +111,14 @@ const LessonPage = () => {
 
     const btnInnerText = isReviewed
         ? exampleNumber === couples.length
-            ? "Finish"
-            : "Next"
-        : "Review"
+            ? translate("lesson-page.Finish")
+            : translate("lesson-page.Next")
+        : translate("lesson-page.Review")
 
     return (
         <>
             <ReviewModalWindow
+                title={translate("lesson-page.reviewModalTitle")}
                 answerText={couples[specificExNumber]?.to}
                 isReviewed={isReviewed}
                 isCorrect={isAnswerCorrect}

@@ -36,6 +36,8 @@
 }
 
 .page {
+    max-width: 768px;
+    margin: 0 auto;
     opacity: 0;
     left: 0;
     top: 0;
@@ -61,4 +63,40 @@
 // }
 .page-exit-active {
     animation: page-out 0.5s ease forwards;
+}
+
+.footer {
+    background-color: var(--grey);
+}
+
+.footer__container {
+    max-width: 768px;
+    margin: 0 auto;
+    padding: 19px 25px;
+}
+
+.footer__contacts {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-contact {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0.8;
+}
+.footer-contact__link {
+    transition: 0.2s;
+
+    font-size: 1.3rem;
+    &:hover {
+        color: var(--green);
+    }
+}
+
+.footer-contact__icon {
+    height: 1.8rem;
 }
